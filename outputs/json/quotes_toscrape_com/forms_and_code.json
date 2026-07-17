@@ -1,0 +1,36 @@
+{
+  "_export": {
+    "exported_at": "2026-07-17T14:42:51.640017",
+    "site_name": "quotes_toscrape_com",
+    "url": "https://quotes.toscrape.com"
+  },
+  "forms": {
+    "count": 0,
+    "forms": []
+  },
+  "navigation": {
+    "nav_menus": [
+      {
+        "label": "",
+        "items": [
+          {
+            "text": "Next→",
+            "url": "https://quotes.toscrape.com/page/2/"
+          }
+        ]
+      }
+    ],
+    "breadcrumbs": [],
+    "stylesheets": [
+      {
+        "url": "https://quotes.toscrape.com/static/bootstrap.min.css",
+        "media": "all"
+      },
+      {
+        "url": "https://quotes.toscrape.com/static/main.css",
+        "media": "all"
+      }
+    ],
+    "scripts": []
+  }
+}

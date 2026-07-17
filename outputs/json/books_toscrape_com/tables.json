@@ -1,0 +1,11 @@
+{
+  "_export": {
+    "exported_at": "2026-07-17T14:44:07.167051",
+    "site_name": "books_toscrape_com",
+    "url": "https://books.toscrape.com"
+  },
+  "tables": {
+    "count": 0,
+    "tables": []
+  }
+}

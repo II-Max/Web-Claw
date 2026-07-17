@@ -1,0 +1,451 @@
+{
+  "_export": {
+    "exported_at": "2026-07-17T14:44:07.167051",
+    "site_name": "books_toscrape_com",
+    "url": "https://books.toscrape.com"
+  },
+  "forms": {
+    "count": 21,
+    "forms": [
+      {
+        "action": "",
+        "method": "GET",
+        "id": "",
+        "name": "",
+        "class": "form-horizontal",
+        "enctype": "",
+        "fields": []
+      },
+      {
+        "action": "",
+        "method": "GET",
+        "id": "",
+        "name": "",
+        "class": "",
+        "enctype": "",
+        "fields": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "id": "",
+            "placeholder": "",
+            "value": "Add to basket",
+            "required": false
+          }
+        ]
+      },
+      {
+        "action": "",
+        "method": "GET",
+        "id": "",
+        "name": "",
+        "class": "",
+        "enctype": "",
+        "fields": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "id": "",
+            "placeholder": "",
+            "value": "Add to basket",
+            "required": false
+          }
+        ]
+      },
+      {
+        "action": "",
+        "method": "GET",
+        "id": "",
+        "name": "",
+        "class": "",
+        "enctype": "",
+        "fields": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "id": "",
+            "placeholder": "",
+            "value": "Add to basket",
+            "required": false
+          }
+        ]
+      },
+      {
+        "action": "",
+        "method": "GET",
+        "id": "",
+        "name": "",
+        "class": "",
+        "enctype": "",
+        "fields": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "id": "",
+            "placeholder": "",
+            "value": "Add to basket",
+            "required": false
+          }
+        ]
+      },
+      {
+        "action": "",
+        "method": "GET",
+        "id": "",
+        "name": "",
+        "class": "",
+        "enctype": "",
+        "fields": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "id": "",
+            "placeholder": "",
+            "value": "Add to basket",
+            "required": false
+          }
+        ]
+      },
+      {
+        "action": "",
+        "method": "GET",
+        "id": "",
+        "name": "",
+        "class": "",
+        "enctype": "",
+        "fields": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "id": "",
+            "placeholder": "",
+            "value": "Add to basket",
+            "required": false
+          }
+        ]
+      },
+      {
+        "action": "",
+        "method": "GET",
+        "id": "",
+        "name": "",
+        "class": "",
+        "enctype": "",
+        "fields": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "id": "",
+            "placeholder": "",
+            "value": "Add to basket",
+            "required": false
+          }
+        ]
+      },
+      {
+        "action": "",
+        "method": "GET",
+        "id": "",
+        "name": "",
+        "class": "",
+        "enctype": "",
+        "fields": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "id": "",
+            "placeholder": "",
+            "value": "Add to basket",
+            "required": false
+          }
+        ]
+      },
+      {
+        "action": "",
+        "method": "GET",
+        "id": "",
+        "name": "",
+        "class": "",
+        "enctype": "",
+        "fields": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "id": "",
+            "placeholder": "",
+            "value": "Add to basket",
+            "required": false
+          }
+        ]
+      },
+      {
+        "action": "",
+        "method": "GET",
+        "id": "",
+        "name": "",
+        "class": "",
+        "enctype": "",
+        "fields": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "id": "",
+            "placeholder": "",
+            "value": "Add to basket",
+            "required": false
+          }
+        ]
+      },
+      {
+        "action": "",
+        "method": "GET",
+        "id": "",
+        "name": "",
+        "class": "",
+        "enctype": "",
+        "fields": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "id": "",
+            "placeholder": "",
+            "value": "Add to basket",
+            "required": false
+          }
+        ]
+      },
+      {
+        "action": "",
+        "method": "GET",
+        "id": "",
+        "name": "",
+        "class": "",
+        "enctype": "",
+        "fields": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "id": "",
+            "placeholder": "",
+            "value": "Add to basket",
+            "required": false
+          }
+        ]
+      },
+      {
+        "action": "",
+        "method": "GET",
+        "id": "",
+        "name": "",
+        "class": "",
+        "enctype": "",
+        "fields": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "id": "",
+            "placeholder": "",
+            "value": "Add to basket",
+            "required": false
+          }
+        ]
+      },
+      {
+        "action": "",
+        "method": "GET",
+        "id": "",
+        "name": "",
+        "class": "",
+        "enctype": "",
+        "fields": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "id": "",
+            "placeholder": "",
+            "value": "Add to basket",
+            "required": false
+          }
+        ]
+      },
+      {
+        "action": "",
+        "method": "GET",
+        "id": "",
+        "name": "",
+        "class": "",
+        "enctype": "",
+        "fields": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "id": "",
+            "placeholder": "",
+            "value": "Add to basket",
+            "required": false
+          }
+        ]
+      },
+      {
+        "action": "",
+        "method": "GET",
+        "id": "",
+        "name": "",
+        "class": "",
+        "enctype": "",
+        "fields": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "id": "",
+            "placeholder": "",
+            "value": "Add to basket",
+            "required": false
+          }
+        ]
+      },
+      {
+        "action": "",
+        "method": "GET",
+        "id": "",
+        "name": "",
+        "class": "",
+        "enctype": "",
+        "fields": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "id": "",
+            "placeholder": "",
+            "value": "Add to basket",
+            "required": false
+          }
+        ]
+      },
+      {
+        "action": "",
+        "method": "GET",
+        "id": "",
+        "name": "",
+        "class": "",
+        "enctype": "",
+        "fields": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "id": "",
+            "placeholder": "",
+            "value": "Add to basket",
+            "required": false
+          }
+        ]
+      },
+      {
+        "action": "",
+        "method": "GET",
+        "id": "",
+        "name": "",
+        "class": "",
+        "enctype": "",
+        "fields": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "id": "",
+            "placeholder": "",
+            "value": "Add to basket",
+            "required": false
+          }
+        ]
+      },
+      {
+        "action": "",
+        "method": "GET",
+        "id": "",
+        "name": "",
+        "class": "",
+        "enctype": "",
+        "fields": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "id": "",
+            "placeholder": "",
+            "value": "Add to basket",
+            "required": false
+          }
+        ]
+      }
+    ]
+  },
+  "navigation": {
+    "nav_menus": [],
+    "breadcrumbs": [],
+    "stylesheets": [
+      {
+        "url": "https://books.toscrape.com/static/oscar/css/styles.css",
+        "media": "all"
+      },
+      {
+        "url": "https://books.toscrape.com/static/oscar/js/bootstrap-datetimepicker/bootstrap-datetimepicker.css",
+        "media": "all"
+      },
+      {
+        "url": "https://books.toscrape.com/static/oscar/css/datetimepicker.css",
+        "media": "all"
+      }
+    ],
+    "scripts": [
+      {
+        "url": "http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js",
+        "async": false,
+        "defer": false,
+        "type": ""
+      },
+      {
+        "url": "https://books.toscrape.com/static/oscar/js/bootstrap3/bootstrap.min.js",
+        "async": false,
+        "defer": false,
+        "type": "text/javascript"
+      },
+      {
+        "url": "https://books.toscrape.com/static/oscar/js/oscar/ui.js",
+        "async": false,
+        "defer": false,
+        "type": "text/javascript"
+      },
+      {
+        "url": "https://books.toscrape.com/static/oscar/js/bootstrap-datetimepicker/bootstrap-datetimepicker.js",
+        "async": false,
+        "defer": false,
+        "type": "text/javascript"
+      },
+      {
+        "url": "https://books.toscrape.com/static/oscar/js/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.all.js",
+        "async": false,
+        "defer": false,
+        "type": "text/javascript"
+      }
+    ]
+  }
+}

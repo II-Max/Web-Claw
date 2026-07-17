@@ -1,0 +1,11 @@
+{
+  "_export": {
+    "exported_at": "2026-07-17T14:42:51.640017",
+    "site_name": "quotes_toscrape_com",
+    "url": "https://quotes.toscrape.com"
+  },
+  "tables": {
+    "count": 0,
+    "tables": []
+  }
+}

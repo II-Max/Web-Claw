@@ -1,0 +1,25 @@
+{
+  "_export": {
+    "exported_at": "2026-07-17T14:42:51.640017",
+    "site_name": "quotes_toscrape_com",
+    "url": "https://quotes.toscrape.com"
+  },
+  "metadata": {
+    "url": "https://quotes.toscrape.com",
+    "title": "Quotes to Scrape",
+    "description": "",
+    "keywords": "",
+    "author": "",
+    "robots": "",
+    "canonical": "",
+    "favicon": "",
+    "charset": "UTF-8",
+    "language": "en",
+    "viewport": "",
+    "generator": "",
+    "og": {},
+    "twitter": {},
+    "json_ld": [],
+    "other_meta": {}
+  }
+}
