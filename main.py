@@ -5,8 +5,16 @@ Usage:
     python -m web_miner.main --batch
 """
 
+import sys
 import argparse
 from typing import Optional, List
+from pathlib import Path
+
+# Thêm thư mục cha vào sys.path để hỗ trợ import tuyệt đối 'web_miner'
+current_file = Path(__file__).resolve()
+project_root = current_file.parent.parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
 
 from rich.console import Console
 from rich.panel import Panel

@@ -39,12 +39,18 @@ pip install -r web_miner/requirements.txt
 
 ## 🛠 2. Hướng Dẫn Chạy Công Cụ
 
+> **Lưu ý quan trọng về thư mục chạy lệnh:**
+> - Nếu bạn đang ở trong thư mục dự án `web_miner` (nơi chứa file `main.py`), hãy sử dụng lệnh `python main.py`.
+> - Nếu bạn đang ở ngoài thư mục dự án (thư mục cha `Data-Mining`), hãy sử dụng lệnh `python -m web_miner.main`.
+>
+> Dưới đây là hướng dẫn chi tiết (ví dụ minh họa khi bạn đang đứng ở thư mục dự án `web_miner`):
+
 DataMine V5 cung cấp 3 chế độ chạy chính:
 
 ### Chế độ 1: Quét một URL (Tương tác trực tiếp)
 Nếu bạn chỉ muốn quét một trang web và muốn công cụ hỏi URL khi chạy, hãy dùng lệnh sau:
 ```bash
-python -m web_miner.main
+python main.py
 ```
 - Khi chạy, công cụ sẽ hiện dấu nhắc: `🌐 Nhập URL website cần cào: `
 - Bạn dán đường link trang web vào (ví dụ: `https://quotes.toscrape.com`) và nhấn Enter. Công cụ sẽ tự động làm phần còn lại.
@@ -52,14 +58,14 @@ python -m web_miner.main
 ### Chế độ 2: Quét một URL (Headless - Trực tiếp qua tham số)
 Rất hữu ích khi bạn muốn tích hợp công cụ vào một script khác hoặc không muốn bị hỏi lại:
 ```bash
-python -m web_miner.main --url https://example.com --no_prompt
+python main.py --url https://example.com --no_prompt
 ```
 - Cờ `--no_prompt` báo cho hệ thống biết không cần hiện bảng hỏi nhập URL nữa. Cần phải đi kèm với tham số `--url`.
 
 ### Chế độ 3: Quét nhiều website cùng lúc (Batch Mode)
 Dành cho việc quét hàng loạt danh sách các website đã chuẩn bị sẵn.
 
-**Bước 1:** Mở file `web_miner/targets.txt` (nếu chưa có, chạy công cụ 1 lần nó sẽ tự tạo) và điền danh sách các URL cần quét, mỗi URL một dòng. Bạn có thể thêm ký tự `#` ở đầu dòng để comment (bỏ qua dòng đó).
+**Bước 1:** Mở file `targets.txt` (nếu chưa có, chạy công cụ 1 lần nó sẽ tự tạo) và điền danh sách các URL cần quét, mỗi URL một dòng. Bạn có thể thêm ký tự `#` ở đầu dòng để comment (bỏ qua dòng đó).
 Ví dụ nội dung file `targets.txt`:
 ```text
 https://quotes.toscrape.com
@@ -69,7 +75,7 @@ https://books.toscrape.com
 
 **Bước 2:** Chạy lệnh batch mode:
 ```bash
-python -m web_miner.main --batch
+python main.py --batch
 ```
 Công cụ sẽ lần lượt quét từng URL trong danh sách và báo cáo tiến độ.
 
