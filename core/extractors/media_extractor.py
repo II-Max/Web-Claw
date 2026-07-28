@@ -9,7 +9,7 @@ from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
 
-from web_miner.core.logger import logger
+from core.logger import logger
 
 
 def extract_media(soup: BeautifulSoup, base_url: str) -> Dict[str, Any]:

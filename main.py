@@ -12,7 +12,7 @@ from pathlib import Path
 
 # Thêm thư mục cha vào sys.path để hỗ trợ import tuyệt đối 'web_miner'
 current_file = Path(__file__).resolve()
-project_root = current_file.parent.parent
+project_root = current_file.parent
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
@@ -20,8 +20,8 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 
-from web_miner.core.batch_processor import process_multiple_sites
-from web_miner.miner import WebMiner
+from core.batch_processor import process_multiple_sites
+from miner import WebMiner
 
 console = Console()
 

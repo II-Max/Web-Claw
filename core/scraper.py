@@ -4,13 +4,13 @@ from typing import Optional, Tuple
 import requests
 from bs4 import BeautifulSoup
 
-from web_miner.core.config import (
+from core.config import (
     USER_AGENT,
     REQUEST_TIMEOUT,
     MAX_RETRIES,
     RETRY_BACKOFF,
 )
-from web_miner.core.logger import logger
+from core.logger import logger
 
 # ===== SESSION SETUP =====
 
@@ -31,7 +31,7 @@ def fetch_page(url: str) -> Tuple[Optional[str], Optional[BeautifulSoup]]:
             response = session.get(
                 url,
                 timeout=REQUEST_TIMEOUT,
-                verify=False,
+                verify=True,
                 allow_redirects=True,
             )
             response.raise_for_status()

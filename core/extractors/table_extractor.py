@@ -9,7 +9,7 @@ from typing import Any, Dict, List
 import pandas as pd
 from bs4 import BeautifulSoup
 
-from web_miner.core.logger import logger
+from core.logger import logger
 
 MIN_ROWS = 2
 MIN_COLS = 2
@@ -19,6 +19,12 @@ def extract_tables(soup: BeautifulSoup, html: str) -> Dict[str, Any]:
     """Extract all valid tables, ranked by quality score."""
 
     logger.info("Extracting tables...")
+
+    # Fast path check to avoid pandas overhead
+    import re
+    if not re.search(r'<table', html, re.IGNORECASE):
+        logger.info("No HTML tables found on page (fast path)")
+        return {"count": 0, "tables": []}
 
     try:
         raw_tables = pd.read_html(

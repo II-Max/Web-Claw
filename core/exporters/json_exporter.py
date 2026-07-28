@@ -8,8 +8,8 @@ import datetime
 from pathlib import Path
 from typing import Any, Dict
 
-from web_miner.core.config import JSON_DIR
-from web_miner.core.logger import logger
+from core.config import JSON_DIR
+from core.logger import logger
 
 
 def export_json(data: Dict[str, Any], site_name: str) -> Path:
