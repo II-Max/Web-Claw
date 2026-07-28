@@ -7,8 +7,8 @@ import datetime
 from pathlib import Path
 from typing import Any, Dict
 
-from web_miner.core.config import MARKDOWN_DIR
-from web_miner.core.logger import logger
+from core.config import MARKDOWN_DIR
+from core.logger import logger
 
 
 def export_markdown(data: Dict[str, Any], site_name: str) -> Path:

@@ -9,9 +9,9 @@ from urllib.parse import urlparse
 
 from bs4 import BeautifulSoup
 
-from web_miner.core.config import EMAIL_REGEX, PHONE_REGEX, SOCIAL_DOMAINS
-from web_miner.core.cleaner import extract_clean_text
-from web_miner.core.logger import logger
+from core.config import EMAIL_REGEX, PHONE_REGEX, SOCIAL_DOMAINS
+from core.cleaner import extract_clean_text
+from core.logger import logger
 
 
 def extract_contacts(soup: BeautifulSoup, html: str) -> Dict[str, Any]:

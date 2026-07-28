@@ -3,7 +3,7 @@ import sys
 
 from rich.logging import RichHandler
 
-from web_miner.core.config import LOG_DIR
+from core.config import LOG_DIR
 
 # ===== LOG FILE =====
 

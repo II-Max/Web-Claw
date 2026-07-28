@@ -3,27 +3,28 @@ WebMiner V5 — Orchestrator that runs all extractors
 and exports data to Markdown + JSON.
 """
 
+import re
 from typing import Any, Dict, Optional
 from urllib.parse import urlparse
 
 from bs4 import BeautifulSoup
 
-from web_miner.core.scraper import fetch_page
-from web_miner.core.logger import logger
+from core.scraper import fetch_page
+from core.logger import logger
 
 # Extractors
-from web_miner.core.extractors.metadata_extractor import extract_metadata
-from web_miner.core.extractors.text_extractor import extract_text_content
-from web_miner.core.extractors.link_extractor import extract_links
-from web_miner.core.extractors.media_extractor import extract_media
-from web_miner.core.extractors.contact_extractor import extract_contacts
-from web_miner.core.extractors.table_extractor import extract_tables
-from web_miner.core.extractors.form_extractor import extract_forms
-from web_miner.core.extractors.nav_extractor import extract_navigation
+from core.extractors.metadata_extractor import extract_metadata
+from core.extractors.text_extractor import extract_text_content
+from core.extractors.link_extractor import extract_links
+from core.extractors.media_extractor import extract_media
+from core.extractors.contact_extractor import extract_contacts
+from core.extractors.table_extractor import extract_tables
+from core.extractors.form_extractor import extract_forms
+from core.extractors.nav_extractor import extract_navigation
 
 # Exporters
-from web_miner.core.exporters.markdown_exporter import export_markdown
-from web_miner.core.exporters.json_exporter import export_json
+from core.exporters.markdown_exporter import export_markdown
+from core.exporters.json_exporter import export_json
 
 
 class WebMiner:
@@ -48,6 +49,10 @@ class WebMiner:
         name = domain.replace(".", "_").replace(":", "_")
         if path:
             name += f"_{path}"
+
+        # Prevent path traversal and sanitize
+        name = re.sub(r'[^a-zA-Z0-9_]', '_', name)
+
         # Keep it reasonable length
         return name[:80]
 
