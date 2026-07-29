@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup, Tag
 def extract_clean_text(html: str) -> str:
     """Extract all visible text, removing scripts/styles/noscript."""
 
-    soup = BeautifulSoup(html, "html.parser")
+    soup = BeautifulSoup(html, "lxml")
 
     for tag in soup(["script", "style", "noscript"]):
         tag.decompose()
@@ -15,7 +15,7 @@ def extract_clean_text(html: str) -> str:
 def get_soup(html: str) -> BeautifulSoup:
     """Parse HTML into a BeautifulSoup object."""
 
-    return BeautifulSoup(html, "html.parser")
+    return BeautifulSoup(html, "lxml")
 
 
 def extract_main_content(soup: BeautifulSoup) -> str:
@@ -37,7 +37,7 @@ def extract_main_content(soup: BeautifulSoup) -> str:
     target = main if main else soup.body if soup.body else soup
 
     # Clone to avoid mutating original
-    clone = BeautifulSoup(str(target), "html.parser")
+    clone = BeautifulSoup(str(target), "lxml")
 
     # Remove unwanted elements
     unwanted_tags = [
