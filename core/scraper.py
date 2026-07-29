@@ -31,7 +31,7 @@ def fetch_page(url: str) -> Tuple[Optional[str], Optional[BeautifulSoup]]:
             response = session.get(
                 url,
                 timeout=REQUEST_TIMEOUT,
-                verify=False,
+                verify=True,
                 allow_redirects=True,
             )
             response.raise_for_status()
@@ -40,7 +40,7 @@ def fetch_page(url: str) -> Tuple[Optional[str], Optional[BeautifulSoup]]:
             response.encoding = response.apparent_encoding
 
             html = response.text
-            soup = BeautifulSoup(html, "html.parser")
+            soup = BeautifulSoup(html, "lxml")
 
             logger.info(f"Success: {url}")
             return html, soup
