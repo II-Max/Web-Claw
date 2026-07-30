@@ -31,7 +31,6 @@ def fetch_page(url: str) -> Tuple[Optional[str], Optional[BeautifulSoup]]:
             response = session.get(
                 url,
                 timeout=REQUEST_TIMEOUT,
-                verify=False,
                 allow_redirects=True,
             )
             response.raise_for_status()
