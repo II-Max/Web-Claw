@@ -4,7 +4,6 @@ from targets.txt using the WebMiner pipeline.
 """
 
 from rich.console import Console
-from rich.progress import Progress, SpinnerColumn, TextColumn
 
 from web_miner.core.config import TARGET_FILE
 from web_miner.miner import WebMiner
