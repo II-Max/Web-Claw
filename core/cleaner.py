@@ -1,3 +1,5 @@
+import copy
+
 from bs4 import BeautifulSoup, Tag
 
 
@@ -37,7 +39,7 @@ def extract_main_content(soup: BeautifulSoup) -> str:
     target = main if main else soup.body if soup.body else soup
 
     # Clone to avoid mutating original
-    clone = BeautifulSoup(str(target), "html.parser")
+    clone = copy.copy(target)
 
     # Remove unwanted elements
     unwanted_tags = [
