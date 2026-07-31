@@ -19,9 +19,12 @@ def extract_contacts(soup: BeautifulSoup, html: str) -> Dict[str, Any]:
 
     logger.info("Extracting contacts...")
 
+    # Extract clean text once to avoid duplicate O(N) DOM parsing
+    clean_text = extract_clean_text(html)
+
     data = {
-        "emails": _get_emails(soup, html),
-        "phones": _get_phones(soup, html),
+        "emails": _get_emails(soup, clean_text),
+        "phones": _get_phones(soup, clean_text),
         "social_profiles": _get_social_profiles(soup),
         "addresses": _get_addresses(soup),
     }
@@ -35,7 +38,7 @@ def extract_contacts(soup: BeautifulSoup, html: str) -> Dict[str, Any]:
     return data
 
 
-def _get_emails(soup: BeautifulSoup, html: str) -> List[Dict[str, str]]:
+def _get_emails(soup: BeautifulSoup, clean_text: str) -> List[Dict[str, str]]:
     """Extract emails from text content and mailto: links."""
 
     emails_set = set()
@@ -55,7 +58,6 @@ def _get_emails(soup: BeautifulSoup, html: str) -> List[Dict[str, str]]:
                 })
 
     # From page text via regex
-    clean_text = extract_clean_text(html)
     found = re.findall(EMAIL_REGEX, clean_text)
 
     for email in found:
@@ -82,7 +84,7 @@ def _is_fake_email(email: str) -> bool:
     return any(p in email.lower() for p in fake_patterns)
 
 
-def _get_phones(soup: BeautifulSoup, html: str) -> List[Dict[str, str]]:
+def _get_phones(soup: BeautifulSoup, clean_text: str) -> List[Dict[str, str]]:
     """Extract phone numbers from text and tel: links."""
 
     phones_set = set()
@@ -104,7 +106,6 @@ def _get_phones(soup: BeautifulSoup, html: str) -> List[Dict[str, str]]:
                 })
 
     # From page text via regex
-    clean_text = extract_clean_text(html)
     found = re.findall(PHONE_REGEX, clean_text)
 
     for phone in found:

@@ -23,7 +23,6 @@ def process_single_site(url: str) -> dict:
         console.print(f"[red]❌ Failed:[/red] {url}")
         return {}
 
-    meta = data.get("metadata", {})
     text = data.get("text", {})
     links = data.get("links", {})
     contacts = data.get("contacts", {})

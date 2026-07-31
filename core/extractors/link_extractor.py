@@ -3,7 +3,7 @@ Link Extractor — Extract and categorize all links:
 internal, external, download files, social media.
 """
 
-from typing import Any, Dict, List
+from typing import Any, Dict
 from urllib.parse import urljoin, urlparse
 
 from bs4 import BeautifulSoup
