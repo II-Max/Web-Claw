@@ -4,7 +4,7 @@ HTML tables. Refactored from V3 table_miner.py.
 """
 
 import io
-from typing import Any, Dict, List
+from typing import Any, Dict
 
 import pandas as pd
 from bs4 import BeautifulSoup
