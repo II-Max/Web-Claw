@@ -3,15 +3,31 @@ import copy
 from bs4 import BeautifulSoup, Tag
 
 
-def extract_clean_text(html: str) -> str:
+from typing import Union
+
+def extract_clean_text(html_or_soup: Union[str, BeautifulSoup]) -> str:
     """Extract all visible text, removing scripts/styles/noscript."""
+    if isinstance(html_or_soup, str):
+        soup = BeautifulSoup(html_or_soup, "html.parser")
+    else:
+        soup = html_or_soup
 
-    soup = BeautifulSoup(html, "html.parser")
+    texts = []
+    for text in soup.strings:
+        text_strip = text.strip()
+        if not text_strip:
+            continue
+        parent = text.parent
+        is_hidden = False
+        while parent is not None and parent.name != '[document]':
+            if parent.name in ['script', 'style', 'noscript']:
+                is_hidden = True
+                break
+            parent = parent.parent
+        if not is_hidden:
+            texts.append(text_strip)
 
-    for tag in soup(["script", "style", "noscript"]):
-        tag.decompose()
-
-    return soup.get_text(separator=" ", strip=True)
+    return " ".join(texts)
 
 
 def get_soup(html: str) -> BeautifulSoup:
