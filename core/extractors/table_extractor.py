@@ -54,8 +54,8 @@ def extract_tables(soup: BeautifulSoup, html: str) -> Dict[str, Any]:
 
             ranked.append(table_data)
 
-        except Exception as e:
-            logger.warning(f"Error processing table {idx + 1}: {e}")
+        except (KeyError, TypeError, ValueError, pd.errors.EmptyDataError) as e:
+            logger.warning(f"Error processing table {idx + 1}: {type(e).__name__} - {e}")
 
     # Sort by score descending
     ranked.sort(key=lambda x: x["score"], reverse=True)
