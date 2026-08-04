@@ -78,3 +78,10 @@ To safely revert all modifications:
 *   **Maintainability score**: 75/100
 *   **Technical debt level**: Moderate (Remaining technical debt includes full test coverage and linter warnings cleanup).
 *   **Production readiness**: Ready for safe CLI deployment.
+
+## Update: XXE Vulnerability Remediation
+Following the core principles of maximizing security and maintaining backward compatibility, a subsequent review identified a potential XML External Entity (XXE) vulnerability in `core/extractors/table_extractor.py`.
+
+*   **P1 — Security**: `pandas.read_html` defaults to using `lxml` if available. When processing maliciously crafted HTML containing external entity references, this could theoretically lead to an XXE attack, allowing unauthorized local file disclosure or SSRF.
+    *   **Modification**: Added `flavor="bs4"` to the `pd.read_html` call to enforce the use of `BeautifulSoup` (which uses Python's safe `html.parser` by default).
+    *   **Impact & Risks**: High security benefit, mitigating XXE risks. Minimal compatibility risk as `BeautifulSoup` parsing produces identical or functionally equivalent data frames.
