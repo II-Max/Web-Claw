@@ -78,3 +78,29 @@ To safely revert all modifications:
 *   **Maintainability score**: 75/100
 *   **Technical debt level**: Moderate (Remaining technical debt includes full test coverage and linter warnings cleanup).
 *   **Production readiness**: Ready for safe CLI deployment.
+
+## XXE Vulnerability Patch (v10/10 Update)
+
+### Findings
+*   **P0 — Critical Security**: In `core/extractors/table_extractor.py`, `pandas.read_html` was called without explicitly setting the parsing `flavor`. This defaults to using `lxml` which can be vulnerable to XML External Entity (XXE) attacks if processing untrusted HTML content.
+
+### Patch Report
+*   **`core/extractors/table_extractor.py`**:
+    *   **Reason**: Prevent potential XXE (XML External Entity) vulnerabilities associated with the default `lxml` parser when processing untrusted HTML containing tables.
+    *   **Modification**: Added `flavor='bs4'` argument to the `pd.read_html` call to enforce using `BeautifulSoup` for parsing HTML tables.
+    *   **Impact & Risks**: High security benefit against malicious HTML input. Minimal compatibility risk, as BeautifulSoup is already heavily utilized throughout the project.
+
+### Security Report
+*   **Detected vulnerabilities**: XML External Entity (XXE) vulnerability via `pandas.read_html` defaulting to `lxml`.
+*   **Applied fixes**: Enforced `BeautifulSoup` parsing by setting `flavor='bs4'` in `core/extractors/table_extractor.py`.
+
+### Testing Report
+*   **New tests**: Added `tests/test_table_extractor.py` to ensure tables are correctly extracted with the new `flavor='bs4'` requirement and that basic table validation works properly.
+
+### Changelog
+*   `core/extractors/table_extractor.py`: Added `flavor='bs4'` to `pd.read_html` to prevent XXE.
+*   `tests/test_table_extractor.py`: Added test for table extraction.
+
+### Rollback Plan
+1.  **Revert `core/extractors/table_extractor.py`**: Remove `flavor='bs4'` from the `pd.read_html` arguments.
+2.  **Revert Tests**: Delete `tests/test_table_extractor.py`.
