@@ -24,6 +24,7 @@ def extract_tables(soup: BeautifulSoup, html: str) -> Dict[str, Any]:
         raw_tables = pd.read_html(
             io.StringIO(html),
             header=0,
+            flavor='bs4',
             thousands=',',
             decimal='.',
             na_values=['-', 'N/A', ''],

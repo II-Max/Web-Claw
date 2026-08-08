@@ -78,3 +78,49 @@ To safely revert all modifications:
 *   **Maintainability score**: 75/100
 *   **Technical debt level**: Moderate (Remaining technical debt includes full test coverage and linter warnings cleanup).
 *   **Production readiness**: Ready for safe CLI deployment.
+
+---
+
+# Maintenance & Modernization Report - Part 2 (XXE Fix & Testing)
+
+## Executive Summary
+This report outlines additional analysis and remediation of issues within the DataMine V5 codebase, following the principle of prioritizing security and stability while maintaining backward compatibility. We successfully identified and remediated a potential XML External Entity (XXE) vulnerability in the table extraction logic and addressed testing and logging inconsistencies.
+
+## Findings
+*   **P0 — Critical Security**: In `core/extractors/table_extractor.py`, `pandas.read_html` was using the default `lxml` parser, which can be vulnerable to XML External Entity (XXE) attacks if exposed to malicious HTML content.
+*   **P4 — Maintainability**: Unit tests in `tests/test_cleaner.py` used absolute imports (`web_miner.core...`) which could cause CI/CD compatibility issues when running tests from the project root. Missing unit test for `core/extractors/table_extractor.py`. Local execution logs were left in the repository.
+
+## Patch Report
+*   **`core/extractors/table_extractor.py`**:
+    *   **Reason**: Prevent potential XXE vulnerabilities associated with the `lxml` parser when parsing HTML tables.
+    *   **Modification**: Added `flavor='bs4'` to `pd.read_html()` to enforce BeautifulSoup parsing.
+    *   **Impact & Risks**: High security benefit. Minor performance/compatibility risk if BS4 handles specific edge-case HTML tables slightly differently than lxml, but BS4 is already the standard parser for the rest of the project.
+*   **`tests/test_cleaner.py`**:
+    *   **Reason**: Ensure CI/CD compatibility and consistency.
+    *   **Modification**: Changed import from `web_miner.core.cleaner` to `core.cleaner`.
+    *   **Impact & Risks**: No functionality change, improves test runner compatibility.
+*   **`logs/datamine.log`**:
+    *   **Reason**: Follow rules regarding not committing local execution logs.
+    *   **Modification**: Deleted the generated `datamine.log` file.
+    *   **Impact & Risks**: No functional impact. Keeps repository clean.
+
+## Testing Report
+*   **New tests**: Added `tests/test_table_extractor.py` to cover `extract_tables()` logic with valid tables and no tables, using `core.` prefix for imports.
+*   **Updated tests**: Updated imports in `tests/test_cleaner.py`.
+*   **Coverage impact**: Increased coverage for table extraction logic. All tests run successfully.
+
+## Changelog
+*   `core/extractors/table_extractor.py`: Added `flavor='bs4'` to `pd.read_html` to prevent XXE vulnerabilities.
+*   `tests/test_cleaner.py`: Updated imports to use `core.` prefix.
+*   `tests/test_table_extractor.py`: Created new test file for table extraction.
+*   `logs/datamine.log`: Removed local execution log.
+
+## Rollback Plan
+To safely revert all modifications:
+1.  **Revert `core/extractors/table_extractor.py`**: Remove `flavor='bs4'` from `pd.read_html`.
+2.  **Revert `tests/test_cleaner.py`**: Change `from core.cleaner` back to `from web_miner.core.cleaner`.
+3.  **Revert Tests**: Delete `tests/test_table_extractor.py`.
+
+## Final Assessment
+*   **Security score**: Increased due to proactive mitigation of XXE vulnerabilities.
+*   **Maintainability score**: Increased due to improved test suite and cleaner repository state.
