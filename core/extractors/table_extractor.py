@@ -27,10 +27,11 @@ def extract_tables(soup: BeautifulSoup, html: str) -> Dict[str, Any]:
             thousands=',',
             decimal='.',
             na_values=['-', 'N/A', ''],
+            flavor='bs4',
         )
     except ValueError:
         logger.info("No HTML tables found on page")
-        return {"count": 0, "tables": []}
+        return {"count": 0, "total_found": 0, "tables": []}
 
     ranked = []
 
