@@ -78,3 +78,70 @@ To safely revert all modifications:
 *   **Maintainability score**: 75/100
 *   **Technical debt level**: Moderate (Remaining technical debt includes full test coverage and linter warnings cleanup).
 *   **Production readiness**: Ready for safe CLI deployment.
+
+---
+
+## Executive Summary (Update 2)
+This secondary report outlines the identification and remediation of an additional critical security vulnerability (XXE) found in the HTML table parsing logic of DataMine V5, along with fixing CI/CD pipeline compatibility for the testing framework.
+
+## Architecture Analysis (Update 2)
+No changes to architecture. The system continues to function as a monolithic, modular Python CLI application.
+
+## Findings (Update 2)
+The codebase analysis revealed the following issues, categorized by severity:
+
+*   **P0 — Critical Security**: In `core/extractors/table_extractor.py`, `pandas.read_html` was not explicitly configured to use BeautifulSoup (`flavor='bs4'`). The default `lxml` parser used by pandas can be susceptible to XML External Entity (XXE) attacks when parsing untrusted HTML data.
+*   **P4 — Maintainability**: The test files (`tests/test_cleaner.py`) were importing modules using the absolute internal prefix `web_miner.core`, which breaks when running pytest in generic CI/CD pipelines since the root directory isn't always recognized as the package `web_miner`.
+
+## Patch Report (Update 2)
+
+*   **`core/extractors/table_extractor.py`**:
+    *   **Reason**: Prevent XML External Entity (XXE) attacks by enforcing the secure BeautifulSoup parser.
+    *   **Modification**: Added `flavor='bs4'` to the `pd.read_html` arguments.
+    *   **Impact & Risks**: High security benefit. Minor compatibility risk if the application relied on specific parsing idiosyncrasies of `lxml`.
+
+*   **`tests/test_cleaner.py`**:
+    *   **Reason**: Ensure tests run correctly in the root project environment.
+    *   **Modification**: Changed import from `web_miner.core.cleaner` to `core.cleaner`.
+    *   **Impact & Risks**: No behavioral change to production code.
+
+## Refactoring Report (Update 2)
+No major architectural refactoring was required.
+
+## Performance Report (Update 2)
+*   **Target**: `core/extractors/table_extractor.py` -> `extract_tables`
+*   No significant performance change expected. `flavor='bs4'` might have slightly different performance characteristics compared to `lxml`, but security supersedes here.
+
+## Security Report (Update 2)
+*   **Detected vulnerabilities**: XML External Entity (XXE) vulnerability in `pandas.read_html` due to the default `lxml` parser.
+*   **Applied fixes**: Enforced BeautifulSoup parsing (`flavor='bs4'`) in `core/extractors/table_extractor.py`.
+*   **Residual risks**: Same as before (potential SSRF by design).
+
+## Dependency Report (Update 2)
+*   **Current Versions**: Dependencies unchanged.
+*   **Recommended Upgrades**: None.
+*   **Migration Risks**: N/A.
+
+## Testing Report (Update 2)
+*   **New tests**: Added `tests/test_table_extractor.py` to ensure tables are correctly extracted and to explicitly cover the `flavor='bs4'` configuration path.
+*   **Updated tests**: Fixed import path in `tests/test_cleaner.py`.
+*   **Coverage impact**: Improved test coverage for the table extraction module.
+
+## Changelog (Update 2)
+*   `core/extractors/table_extractor.py`: Added `flavor='bs4'` to `pd.read_html`.
+*   `tests/test_cleaner.py`: Updated imports to use `core.` prefix.
+*   `tests/test_table_extractor.py`: Added new unit tests for table extraction.
+
+## Rollback Plan (Update 2)
+To safely revert all modifications:
+1.  **Revert `core/extractors/table_extractor.py`**: Remove `flavor='bs4'` from the `pd.read_html` arguments.
+2.  **Revert `tests/test_cleaner.py`**: Change `from core.cleaner import...` back to `from web_miner.core.cleaner import...`.
+3.  **Revert Tests**: Delete `tests/test_table_extractor.py`.
+
+## Final Assessment (Update 2)
+*   **Overall project health score**: 85/100 (Improved from 80)
+*   **Security score**: 95/100 (Improved from 90)
+*   **Performance score**: 85/100
+*   **Maintainability score**: 80/100 (Improved from 75)
+*   **Technical debt level**: Low-Moderate (Test coverage continues to improve).
+*   **Production readiness**: Ready for safe CLI deployment.
