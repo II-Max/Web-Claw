@@ -14,6 +14,8 @@ The codebase analysis revealed the following issues, categorized by severity:
 *   **P4 — Maintainability**: Several files contained unused imports and missing linting optimizations, specifically `rich.progress` imports in `core/batch_processor.py`.
 *   **P5 — Style & Quality Assurance**: The project completely lacked automated testing (unit tests, integration tests), which poses a risk for long-term maintenance.
 
+*   **P0 — Critical Security**: In `core/extractors/table_extractor.py`, `pandas.read_html` lacked the `flavor='bs4'` parameter, relying on the default `lxml` parser which is vulnerable to XML External Entity (XXE) attacks.
+
 ## Patch Report
 
 *   **`core/scraper.py`**:
@@ -31,6 +33,11 @@ The codebase analysis revealed the following issues, categorized by severity:
     *   **Modification**: Removed unused `Progress`, `SpinnerColumn`, and `TextColumn` imports from `rich.progress`.
     *   **Impact & Risks**: No behavioral change.
 
+*   **`core/extractors/table_extractor.py`**:
+    *   **Reason**: Prevent XML External Entity (XXE) vulnerabilities in HTML parsing.
+    *   **Modification**: Added `flavor='bs4'` to `pd.read_html()`.
+    *   **Impact & Risks**: High security benefit. Minor compatibility risk if users were dependent on specific quirks of the lxml parser.
+
 ## Refactoring Report
 No major architectural refactoring was required, adhering to the principle of minimal change. Only minor code-level improvements (import cleanup) were made to maintain readability.
 
@@ -45,6 +52,9 @@ No major architectural refactoring was required, adhering to the principle of mi
 *   **Detected vulnerabilities**: Man-in-the-Middle (MITM) vulnerability due to disabled TLS verification (`verify=False`).
 *   **Applied fixes**: Enforced standard certificate validation in `core/scraper.py`.
 *   **Residual risks**: The tool executes HTTP requests against arbitrary URLs provided by users (via `--url` or `targets.txt`), making it theoretically susceptible to SSRF if run within an internal network without outbound restrictions. Given its nature as a CLI web scraper, this behavior is intentional.
+
+*   **Detected vulnerabilities**: XML External Entity (XXE) vulnerability due to default `lxml` parsing in `pandas.read_html`.
+*   **Applied fixes**: Enforced `BeautifulSoup` parsing by setting `flavor='bs4'` in `core/extractors/table_extractor.py`.
 
 ## Dependency Report
 Current dependencies (e.g., `requests`, `beautifulsoup4`, `rich`) are adequate for the current scope.
@@ -64,12 +74,16 @@ Current dependencies (e.g., `requests`, `beautifulsoup4`, `rich`) are adequate f
 *   `tests/test_cleaner.py`: Added new unit tests for HTML cleaning functions.
 *   `tests/__init__.py`: Added test directory initialization.
 
+*   `core/extractors/table_extractor.py`: Added `flavor='bs4'` to `pd.read_html` to prevent XXE vulnerabilities.
+
 ## Rollback Plan
 To safely revert all modifications:
 1.  **Revert `core/scraper.py`**: Add `verify=False` back to the `session.get` arguments.
 2.  **Revert `core/cleaner.py`**: Replace `copy.copy(target)` with `BeautifulSoup(str(target), "html.parser")` and remove `import copy`.
 3.  **Revert `core/batch_processor.py`**: Add back `from rich.progress import Progress, SpinnerColumn, TextColumn`.
 4.  **Revert Tests**: Delete the `tests/` directory and its contents.
+
+5.  **Revert `core/extractors/table_extractor.py`**: Remove `flavor='bs4'` from the `pd.read_html` arguments.
 
 ## Final Assessment
 *   **Overall project health score**: 80/100
