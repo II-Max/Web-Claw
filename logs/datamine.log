@@ -166,3 +166,7 @@
 2026-07-17 14:56:00,707 - INFO - Markdown export complete: C:\Users\Phamv\OneDrive\Desktop\Data-Mining\web_miner\outputs\markdown\benhvientimhanoi_vn_vn_cong_thong-tin_gioi-thieu-chung
 2026-07-17 14:56:00,708 - INFO - Exporting JSON to: C:\Users\Phamv\OneDrive\Desktop\Data-Mining\web_miner\outputs\json\benhvientimhanoi_vn_vn_cong_thong-tin_gioi-thieu-chung
 2026-07-17 14:56:00,712 - INFO - JSON export complete: C:\Users\Phamv\OneDrive\Desktop\Data-Mining\web_miner\outputs\json\benhvientimhanoi_vn_vn_cong_thong-tin_gioi-thieu-chung
+2026-08-19 13:13:27,898 - INFO - Extracting tables...
+2026-08-19 13:13:27,942 - INFO - Tables extracted: 1 valid out of 1 found
+2026-08-19 13:13:27,945 - INFO - Extracting tables...
+2026-08-19 13:13:27,947 - INFO - No HTML tables found on page
