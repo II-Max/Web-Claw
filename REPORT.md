@@ -78,3 +78,32 @@ To safely revert all modifications:
 *   **Maintainability score**: 75/100
 *   **Technical debt level**: Moderate (Remaining technical debt includes full test coverage and linter warnings cleanup).
 *   **Production readiness**: Ready for safe CLI deployment.
+
+## Mitigation of XXE Vulnerability
+
+### Findings Supplement
+*   **P0 — Critical Security**: In `core/extractors/table_extractor.py`, the `pd.read_html` function was called without explicitly defining the HTML parsing flavor. By default, it relies on `lxml` if available, which can be vulnerable to XML External Entity (XXE) injection attacks if exposed to untrusted HTML.
+
+### Patch Report Supplement
+*   **`core/extractors/table_extractor.py`**:
+    *   **Reason**: Mitigate potential XXE vulnerabilities.
+    *   **Modification**: Added `flavor='bs4'` to explicitly instruct `pandas.read_html` to use BeautifulSoup4 instead of `lxml`.
+    *   **Impact & Risks**: Strong security benefit. Ensures stable, expected behavior and limits vector for external entity processing. Backward compatibility is maintained.
+
+### Security Report Supplement
+*   **Detected vulnerabilities**: Potential XML External Entity (XXE) injection via `pandas.read_html` relying on the default `lxml` parser.
+*   **Applied fixes**: Added `flavor='bs4'` argument to enforce secure parsing in `core/extractors/table_extractor.py`.
+*   **Residual risks**: None regarding this issue.
+
+### Testing Report Supplement
+*   **New tests**: Added `tests/test_table_extractor.py` to cover valid HTML tables, missing tables, and small tables without sufficient rows/cols.
+*   **Coverage impact**: Test suite now covers `extract_tables` and ensures backward compatibility of extraction logic and quality ranking.
+
+### Changelog Supplement
+*   `core/extractors/table_extractor.py`: Included `flavor='bs4'` in `pd.read_html` call.
+*   `tests/test_table_extractor.py`: Created new file for tests.
+
+### Rollback Plan Supplement
+To revert this modification safely:
+1.  **Revert `core/extractors/table_extractor.py`**: Remove `flavor='bs4'` from the `pd.read_html` call inside `extract_tables`.
+2.  **Revert Tests**: Delete the `tests/test_table_extractor.py` file.
