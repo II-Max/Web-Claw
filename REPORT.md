@@ -10,6 +10,7 @@ The current architecture is a monolithic, modular Python CLI application that ac
 The codebase analysis revealed the following issues, categorized by severity:
 
 *   **P0 — Critical Security**: In `core/scraper.py`, `requests.get` was hardcoded to use `verify=False`, which disables SSL certificate validation, rendering the application vulnerable to Man-In-The-Middle (MITM) attacks.
+*   **P0 — Critical Security**: In `core/extractors/table_extractor.py`, `pd.read_html` used the default `lxml` parser, which is susceptible to XML External Entity (XXE) injection vulnerabilities.
 *   **P3 — Performance**: In `core/cleaner.py`, the `extract_main_content` function cloned `BeautifulSoup` objects by serializing them to a string and re-parsing them (`BeautifulSoup(str(target), "html.parser")`). This resulted in unnecessary O(N) string serialization and processing overhead.
 *   **P4 — Maintainability**: Several files contained unused imports and missing linting optimizations, specifically `rich.progress` imports in `core/batch_processor.py`.
 *   **P5 — Style & Quality Assurance**: The project completely lacked automated testing (unit tests, integration tests), which poses a risk for long-term maintenance.
@@ -31,6 +32,11 @@ The codebase analysis revealed the following issues, categorized by severity:
     *   **Modification**: Removed unused `Progress`, `SpinnerColumn`, and `TextColumn` imports from `rich.progress`.
     *   **Impact & Risks**: No behavioral change.
 
+*   **`core/extractors/table_extractor.py`**:
+    *   **Reason**: Prevent XML External Entity (XXE) vulnerabilities by enforcing safe parsing.
+    *   **Modification**: Added `flavor='bs4'` to `pd.read_html()` call to force the use of `BeautifulSoup` parser instead of the vulnerable `lxml` default.
+    *   **Impact & Risks**: High security benefit. Minor compatibility risk if the target relies on specific lxml parsing quirks, but `bs4` is standard across this codebase.
+
 ## Refactoring Report
 No major architectural refactoring was required, adhering to the principle of minimal change. Only minor code-level improvements (import cleanup) were made to maintain readability.
 
@@ -42,8 +48,12 @@ No major architectural refactoring was required, adhering to the principle of mi
 *   **Memory impact**: Reduced memory allocation (avoids intermediate full-string representation).
 
 ## Security Report
-*   **Detected vulnerabilities**: Man-in-the-Middle (MITM) vulnerability due to disabled TLS verification (`verify=False`).
-*   **Applied fixes**: Enforced standard certificate validation in `core/scraper.py`.
+*   **Detected vulnerabilities**:
+    *   Man-in-the-Middle (MITM) vulnerability due to disabled TLS verification (`verify=False`).
+    *   XML External Entity (XXE) vulnerability in HTML table parsing due to default `lxml` usage in `pandas.read_html()`.
+*   **Applied fixes**:
+    *   Enforced standard certificate validation in `core/scraper.py`.
+    *   Enforced secure parsing by adding `flavor='bs4'` to `pd.read_html()` in `core/extractors/table_extractor.py`.
 *   **Residual risks**: The tool executes HTTP requests against arbitrary URLs provided by users (via `--url` or `targets.txt`), making it theoretically susceptible to SSRF if run within an internal network without outbound restrictions. Given its nature as a CLI web scraper, this behavior is intentional.
 
 ## Dependency Report
@@ -53,7 +63,9 @@ Current dependencies (e.g., `requests`, `beautifulsoup4`, `rich`) are adequate f
 *   **Migration Risks**: N/A.
 
 ## Testing Report
-*   **New tests**: Added `tests/test_cleaner.py` to cover the `extract_main_content` and `extract_clean_text` functions.
+*   **New tests**:
+    *   Added `tests/test_cleaner.py` to cover the `extract_main_content` and `extract_clean_text` functions.
+    *   Added `tests/test_table_extractor.py` to cover `extract_tables` function and ensure basic HTML tables are extracted properly.
 *   **Updated tests**: N/A
 *   **Coverage impact**: Introduced the foundational testing framework. The core cleaning logic is now verified against XSS payload stripping and accurate target DOM extraction.
 
@@ -63,6 +75,8 @@ Current dependencies (e.g., `requests`, `beautifulsoup4`, `rich`) are adequate f
 *   `core/batch_processor.py`: Removed unused `rich.progress` imports.
 *   `tests/test_cleaner.py`: Added new unit tests for HTML cleaning functions.
 *   `tests/__init__.py`: Added test directory initialization.
+*   `core/extractors/table_extractor.py`: Forced `pd.read_html` to use `flavor='bs4'` to prevent XXE.
+*   `tests/test_table_extractor.py`: Added new unit test for table extraction.
 
 ## Rollback Plan
 To safely revert all modifications:
@@ -70,6 +84,7 @@ To safely revert all modifications:
 2.  **Revert `core/cleaner.py`**: Replace `copy.copy(target)` with `BeautifulSoup(str(target), "html.parser")` and remove `import copy`.
 3.  **Revert `core/batch_processor.py`**: Add back `from rich.progress import Progress, SpinnerColumn, TextColumn`.
 4.  **Revert Tests**: Delete the `tests/` directory and its contents.
+5.  **Revert `core/extractors/table_extractor.py`**: Remove `flavor='bs4'` from `pd.read_html`.
 
 ## Final Assessment
 *   **Overall project health score**: 80/100
