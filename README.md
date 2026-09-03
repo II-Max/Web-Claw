@@ -1,126 +1,298 @@
-# Hướng Dẫn Sử Dụng DataMine V5
+# Web-Claw V6 — Advanced Web Data Scraper
 
-Chào mừng bạn đến với **DataMine V5** — Công cụ trích xuất dữ liệu web toàn diện.
-DataMine V5 cho phép bạn cào 18 loại dữ liệu khác nhau từ bất kỳ website nào và tự động phân loại, xuất ra các định dạng chuẩn (`Markdown` và `JSON`) để dễ dàng đọc và xử lý tiếp.
+<p align="center">
+  <strong>Công cụ cào dữ liệu web chuyên nghiệp cho Windows & Linux</strong><br>
+  <em>Trích xuất 18+ loại dữ liệu · Hỗ trợ JavaScript rendering · Anti-detection · Multi-format export</em>
+</p>
 
 ---
 
-## 🚀 1. Cài đặt và Chuẩn bị
+## ✨ Tính năng
 
-### Yêu cầu hệ thống:
-- Python 3.10 trở lên.
-- Git (nếu muốn clone từ kho lưu trữ).
+| Tính năng | Mô tả |
+|-----------|-------|
+| 🔄 Smart Scraping | Tự động phát hiện website JS-rendered, fallback sang headless browser |
+| 🛡️ Anti-Detection | Random User-Agent (16 UA), realistic headers, configurable delay |
+| 🔐 Auth & Cookies | Hỗ trợ cookie, HTTP Basic Auth, custom headers, cookie file JSON |
+| 🌐 Proxy | HTTP / HTTPS / SOCKS5 proxy |
+| 🕷️ Multi-page Crawl | Crawl sâu nhiều cấp, same-domain filter, URL dedup |
+| 📦 4 Output Formats | Markdown · JSON · CSV · Excel (.xlsx) |
+| 📋 Batch Mode | Cào hàng loạt từ `targets.txt` |
+| 🔒 SSL Flexible | Hỗ trợ `--no-verify` cho self-signed certificates |
 
-### Các bước cài đặt:
+### 18+ loại dữ liệu được trích xuất
 
-**Bước 1:** Clone mã nguồn hoặc tải thư mục mã nguồn về máy:
+- **Metadata** — Title, Description, Keywords, Author, Canonical URL, Favicon, Charset, Language, Viewport, Generator
+- **Open Graph & Twitter Cards** — Toàn bộ thẻ OG và Twitter Card
+- **Structured Data** — JSON-LD (Schema.org)
+- **Text** — Headings (H1-H6), Paragraphs, Lists (UL/OL/DL), Blockquotes, Code Blocks
+- **Links** — Internal, External, Social Media, Download Files, Anchors
+- **Media** — Images (src, alt, srcset, dimensions), Videos (HTML5 + YouTube/Vimeo/Dailymotion), Audio
+- **Contacts** — Emails (mailto + regex), Phone (tel + regex), Social Profiles, Addresses
+- **Tables** — Trích xuất, validate, scoring và ranking
+- **Forms** — Action, Method, tất cả fields (input/select/textarea/button)
+- **Navigation** — Nav menus, Breadcrumbs, Stylesheets, Scripts
+
+---
+
+## 🚀 Cài đặt
+
+### Yêu cầu hệ thống
+- Python 3.10 trở lên
+- Git (tùy chọn, để clone)
+
+### Bước 1 — Clone & thiết lập môi trường
+
 ```bash
-git clone https://github.com/yourusername/DataMine.git
-cd DataMine
+git clone https://github.com/yourusername/Web-Claw.git
+cd Web-Claw
 ```
 
-**Bước 2:** (Khuyến nghị) Tạo môi trường ảo (virtual environment) để tránh xung đột thư viện:
+**Linux / macOS:**
 ```bash
-# Trên Windows
-python -m venv venv
-venv\Scripts\activate
-
-# Trên Linux/macOS
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-**Bước 3:** Cài đặt các thư viện phụ thuộc:
-```bash
-pip install -r web_miner/requirements.txt
+**Windows:**
+```powershell
+python -m venv venv
+venv\Scripts\activate
 ```
+
+### Bước 2 — Cài dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### Bước 3 — Cài headless browser (tùy chọn, cho website JS-rendered)
+
+```bash
+playwright install chromium
+```
+
+> **Lưu ý:** Bước này chỉ cần thiết nếu bạn muốn cào website render bằng JavaScript (SPA). Nếu chỉ cào website tĩnh, bước này không bắt buộc — tool sẽ tự động dùng `requests`.
 
 ---
 
-## 🛠 2. Hướng Dẫn Chạy Công Cụ
+## 🛠 Hướng dẫn sử dụng
 
-> **Lưu ý quan trọng về thư mục chạy lệnh:**
-> - Nếu bạn đang ở trong thư mục dự án `web_miner` (nơi chứa file `main.py`), hãy sử dụng lệnh `python main.py`.
-> - Nếu bạn đang ở ngoài thư mục dự án (thư mục cha `Data-Mining`), hãy sử dụng lệnh `python -m web_miner.main`.
->
-> Dưới đây là hướng dẫn chi tiết (ví dụ minh họa khi bạn đang đứng ở thư mục dự án `web_miner`):
-
-DataMine V5 cung cấp 3 chế độ chạy chính:
-
-### Chế độ 1: Quét một URL (Tương tác trực tiếp)
-Nếu bạn chỉ muốn quét một trang web và muốn công cụ hỏi URL khi chạy, hãy dùng lệnh sau:
+### Chế độ 1 — Cào 1 trang (tương tác)
 ```bash
 python main.py
 ```
-- Khi chạy, công cụ sẽ hiện dấu nhắc: `🌐 Nhập URL website cần cào: `
-- Bạn dán đường link trang web vào (ví dụ: `https://quotes.toscrape.com`) và nhấn Enter. Công cụ sẽ tự động làm phần còn lại.
+Tool sẽ hiện prompt hỏi URL. Nhập URL và nhấn Enter.
 
-### Chế độ 2: Quét một URL (Headless - Trực tiếp qua tham số)
-Rất hữu ích khi bạn muốn tích hợp công cụ vào một script khác hoặc không muốn bị hỏi lại:
+### Chế độ 2 — Cào 1 trang (trực tiếp)
 ```bash
-python main.py --url https://example.com --no_prompt
-```
-- Cờ `--no_prompt` báo cho hệ thống biết không cần hiện bảng hỏi nhập URL nữa. Cần phải đi kèm với tham số `--url`.
-
-### Chế độ 3: Quét nhiều website cùng lúc (Batch Mode)
-Dành cho việc quét hàng loạt danh sách các website đã chuẩn bị sẵn.
-
-**Bước 1:** Mở file `targets.txt` (nếu chưa có, chạy công cụ 1 lần nó sẽ tự tạo) và điền danh sách các URL cần quét, mỗi URL một dòng. Bạn có thể thêm ký tự `#` ở đầu dòng để comment (bỏ qua dòng đó).
-Ví dụ nội dung file `targets.txt`:
-```text
-https://quotes.toscrape.com
-https://books.toscrape.com
-# https://ignore-this-site.com
+python main.py --url https://example.com
 ```
 
-**Bước 2:** Chạy lệnh batch mode:
+### Chế độ 3 — Headless mode (non-interactive)
+```bash
+python main.py --url https://example.com --no-prompt
+```
+Hữu ích khi tích hợp vào script/pipeline khác.
+
+### Chế độ 4 — Force JavaScript rendering
+```bash
+python main.py --url https://example.com --js
+```
+Bắt buộc dùng Playwright headless browser. Phù hợp cho các website React, Vue, Angular, Next.js...
+
+### Chế độ 5 — Crawl nhiều trang
+```bash
+python main.py --url https://example.com --depth 3 --max-pages 20
+```
+Crawl từ URL gốc, follow link đến depth=3, tối đa 20 trang.
+
+### Chế độ 6 — Batch mode (hàng loạt)
 ```bash
 python main.py --batch
 ```
-Công cụ sẽ lần lượt quét từng URL trong danh sách và báo cáo tiến độ.
+Cào tất cả URL trong file `targets.txt` (mỗi URL một dòng, dùng `#` để comment).
+
+### Proxy, Cookie & Authentication
+
+```bash
+# Proxy
+python main.py --url https://example.com --proxy http://127.0.0.1:8080
+python main.py --url https://example.com --proxy socks5://127.0.0.1:1080
+
+# Cookie
+python main.py --url https://example.com --cookie "session=abc123" --cookie "token=xyz"
+python main.py --url https://example.com --cookie-file cookies.json
+
+# HTTP Basic Auth
+python main.py --url https://example.com --auth admin:password
+
+# Custom headers
+python main.py --url https://example.com --header "Authorization: Bearer token123"
+```
+
+### SSL & Output
+
+```bash
+# Bỏ qua SSL verification (self-signed cert)
+python main.py --url https://internal.local --no-verify
+
+# Chọn format xuất
+python main.py --url https://example.com --format md           # Chỉ Markdown
+python main.py --url https://example.com --format json,csv     # JSON + CSV
+python main.py --url https://example.com --format all          # Tất cả (mặc định)
+```
 
 ---
 
-## 📂 3. Hiểu Cấu Trúc Dữ Liệu Đầu Ra (Output)
+## 📋 Tham chiếu CLI
 
-Sau khi chạy xong, dữ liệu sẽ được lưu tại thư mục: `web_miner/outputs/`
-Bên trong thư mục này có 2 thư mục con là `markdown/` và `json/`. Mỗi website được quét sẽ tạo ra một thư mục mang tên miền của nó.
+| Option | Mô tả | Mặc định |
+|--------|--------|----------|
+| `--url URL` | URL website cần cào | _(prompt khi chạy)_ |
+| `--batch` | Batch mode từ `targets.txt` | — |
+| `--no-prompt` | Không hỏi tương tác (cần `--url`) | — |
+| `--js` | Bắt buộc headless browser | — |
+| `--depth N` | Crawl sâu N cấp | `1` |
+| `--max-pages N` | Tối đa trang crawl | `50` |
+| `--same-domain` | Chỉ follow link cùng domain | `True` |
+| `--no-verify` | Bỏ qua SSL certificate | — |
+| `--timeout N` | Timeout mỗi request (giây) | `30` |
+| `--delay N` | Delay cố định giữa requests (giây) | _random 0.5–2s_ |
+| `--retries N` | Số lần retry khi thất bại | `3` |
+| `--proxy URL` | Proxy server (`http://`, `socks5://`) | — |
+| `--cookie K=V` | Cookie (sử dụng nhiều lần) | — |
+| `--cookie-file PATH` | Load cookie từ file JSON | — |
+| `--header K:V` | Custom header (sử dụng nhiều lần) | — |
+| `--auth user:pass` | HTTP Basic Authentication | — |
+| `--format FMT` | `md`, `json`, `csv`, `xlsx`, `all` | `all` |
+| `--quiet` | Ẩn bảng kết quả chi tiết | — |
 
-Ví dụ, quét `https://quotes.toscrape.com`, bạn sẽ có:
+---
 
-### Thư mục `markdown/quotes_toscrape_com/`
-Dành cho việc đọc trực tiếp (Human-readable). Dễ dàng xem bằng các editor như VSCode, Obsidian hoặc GitHub:
-- `full_content.md`: Tổng hợp thông tin cốt lõi (Title, thống kê số lượng), nội dung chính (đã loại bỏ quảng cáo, footer) và cấu trúc các thẻ Heading (H1-H6).
-- `metadata.md`: Chứa Title, Description, Keywords, các thẻ Open Graph (Facebook), Twitter Cards và cả Structured Data (JSON-LD).
-- `tables.md`: Tất cả các bảng HTML đã được cào, chuyển thành bảng dạng Markdown.
-- `links.md`: Phân loại danh sách link thành: Internal, External, Social Media (Facebook, Twitter...) và Link tải file (PDF, Zip...).
-- `media.md`: Hình ảnh (kèm kích thước, thẻ alt), Videos và Audio.
-- `contacts.md`: Email, Số điện thoại (tự động chuẩn hóa), liên kết mạng xã hội và địa chỉ.
-- `forms_and_code.md`: Thông tin các form nhập liệu, mã nguồn (code blocks) và các tài nguyên CSS/JS.
+## 📂 Cấu trúc Output
 
-### Thư mục `json/quotes_toscrape_com/`
-Dành cho máy đọc, tiện lợi để nạp vào Database, API hoặc phân tích bằng Pandas:
-- `full_data.json`: File tổng chứa TẤT CẢ mọi dữ liệu cào được từ trang.
-- `metadata.json`, `tables.json`, `links.json`, `media.json`, `contacts.json`, `text_content.json`, `forms_and_code.json`: Chứa dữ liệu tương ứng đã được cấu trúc dưới dạng JSON chuẩn.
+Dữ liệu xuất ra được tổ chức trong `outputs/`, phân theo format và tên miền:
+
+```
+outputs/
+├── markdown/<domain>/
+│   ├── full_content.md          # Tổng hợp: stats, nội dung chính, headings
+│   ├── metadata.md              # Title, OG, Twitter Cards, JSON-LD
+│   ├── tables.md                # Bảng HTML → Markdown table
+│   ├── links.md                 # Internal, External, Social, Downloads
+│   ├── media.md                 # Images, Videos, Audio
+│   ├── contacts.md              # Emails, Phones, Social profiles, Addresses
+│   └── forms_and_code.md        # Forms, Code blocks, CSS/JS, Navigation
+│
+├── json/<domain>/
+│   ├── full_data.json           # TẤT CẢ dữ liệu trong 1 file
+│   ├── metadata.json            # Metadata riêng
+│   ├── links.json               # Links riêng
+│   ├── media.json               # Media riêng
+│   ├── contacts.json            # Contacts riêng
+│   ├── text_content.json        # Text content riêng
+│   ├── tables.json              # Tables riêng
+│   └── forms_and_code.json      # Forms + Navigation riêng
+│
+├── csv/<domain>/
+│   ├── links.csv                # Tất cả links
+│   ├── social_links.csv         # Social media links
+│   ├── emails.csv               # Emails
+│   ├── phones.csv               # Phone numbers
+│   ├── images.csv               # Images
+│   ├── headings.csv             # Headings (H1-H6)
+│   ├── paragraphs.csv           # Paragraphs
+│   └── table_N.csv              # Từng bảng HTML
+│
+└── excel/<domain>/
+    └── data.xlsx                # Multi-sheet workbook (tất cả dữ liệu)
+```
 
 ---
 
-## 📌 4. Khắc phục sự cố & Lưu ý
+## 🏗 Kiến trúc dự án
 
-- **Lỗi Encoding Unicode trên Windows:** Nếu bạn chạy trên Windows Terminal/Command Prompt và gặp lỗi in ký tự (ví dụ: lỗi với các icon Emoji), bạn hãy thiết lập biến môi trường UTF-8 trước khi chạy:
-  - PowerShell:
-    ```powershell
-    $env:PYTHONUTF8="1"
-    $env:PYTHONIOENCODING="utf-8"
-    python -m web_miner.main
-    ```
-  - CMD:
-    ```cmd
-    set PYTHONUTF8=1
-    set PYTHONIOENCODING=utf-8
-    python -m web_miner.main
-    ```
-- **Không kết nối được website:** Công cụ có chế độ tự động thử lại (retry) 3 lần. Nếu cả 3 lần đều thất bại, nguyên nhân có thể do website bị sập, hoặc có hệ thống chặn bot (Cloudflare, CAPTCHA).
+```
+Web-Claw/
+├── main.py                      # CLI entry point
+├── miner.py                     # WebMiner orchestrator
+├── core/
+│   ├── config.py                # Cấu hình tập trung
+│   ├── scraper.py               # Smart fetcher (requests + Playwright)
+│   ├── cleaner.py               # HTML cleaning & content extraction
+│   ├── crawler.py               # Multi-page BFS crawler
+│   ├── logger.py                # Logging (file + Rich console)
+│   ├── user_agents.py           # User-Agent pool & header generator
+│   ├── batch_processor.py       # Batch processing từ targets.txt
+│   ├── extractors/              # 8 data extractors
+│   │   ├── metadata_extractor.py
+│   │   ├── text_extractor.py
+│   │   ├── link_extractor.py
+│   │   ├── media_extractor.py
+│   │   ├── contact_extractor.py
+│   │   ├── table_extractor.py
+│   │   ├── form_extractor.py
+│   │   └── nav_extractor.py
+│   └── exporters/               # 4 data exporters
+│       ├── markdown_exporter.py
+│       ├── json_exporter.py
+│       ├── csv_exporter.py
+│       └── excel_exporter.py
+├── tests/
+│   └── test_cleaner.py          # Unit tests
+├── targets.txt                  # Danh sách URL cho batch mode
+├── requirements.txt             # Python dependencies
+└── logs/
+    └── datamine.log             # Log file
+```
 
 ---
-*Chúc bạn khai thác dữ liệu hiệu quả với DataMine V5!*
+
+## ⚙️ Cách hoạt động (Pipeline)
+
+```
+URL Input
+    │
+    ▼
+┌─────────────────┐
+│   Smart Fetch    │  requests → (auto-detect JS?) → Playwright fallback
+│   + Anti-detect  │  random UA, headers, delay, proxy, cookies
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│   8 Extractors   │  metadata, text, links, media, contacts, tables, forms, nav
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│   4 Exporters    │  Markdown, JSON, CSV, Excel
+└─────────────────┘
+```
+
+---
+
+## 📌 Khắc phục sự cố
+
+| Vấn đề | Giải pháp |
+|--------|-----------|
+| Lỗi encoding Unicode trên Windows | Đặt `$env:PYTHONUTF8="1"` trước khi chạy |
+| Website chặn bot (Cloudflare, CAPTCHA) | Dùng `--js` để render qua headless browser |
+| SSL Error / Self-signed certificate | Dùng `--no-verify` |
+| Website yêu cầu đăng nhập | Dùng `--cookie`, `--cookie-file` hoặc `--auth` |
+| Playwright chưa cài browser | Chạy `playwright install chromium` |
+| Rate limiting / bị block IP | Dùng `--proxy` và `--delay` |
+| Không thấy dữ liệu (website JS) | Thêm flag `--js` để render JavaScript |
+
+---
+
+## 📄 License
+
+MIT License — Sử dụng tự do cho mục đích cá nhân và thương mại.
+
+---
+
+<p align="center">
+  <strong>Web-Claw V6</strong> · Chúc bạn khai thác dữ liệu hiệu quả! 🕷️
+</p>

@@ -6,8 +6,8 @@ code blocks, blockquotes from page content.
 from typing import Any, Dict, List
 from bs4 import BeautifulSoup, Tag
 
-from web_miner.core.cleaner import extract_main_content
-from web_miner.core.logger import logger
+from core.cleaner import extract_main_content
+from core.logger import logger
 
 
 def extract_text_content(soup: BeautifulSoup) -> Dict[str, Any]:

@@ -1,3 +1,9 @@
+"""
+Cleaner V6 — HTML cleaning and content extraction utilities.
+Removes unwanted elements (scripts, ads, navigation) to extract
+meaningful page content.
+"""
+
 import copy
 
 from bs4 import BeautifulSoup, Tag
@@ -55,6 +61,7 @@ def extract_main_content(soup: BeautifulSoup) -> str:
         "sidebar", "menu", "nav", "footer",
         "header", "advertisement", "ad-", "ads-",
         "banner", "popup", "modal", "cookie",
+        "newsletter", "subscribe", "social-share",
     ]
 
     for element in list(clone.find_all(True)):

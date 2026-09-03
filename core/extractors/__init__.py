@@ -1,1 +1,1 @@
-# Extractors package for DataMine V5
+# Extractors package

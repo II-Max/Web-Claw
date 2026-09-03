@@ -8,12 +8,12 @@ from urllib.parse import urljoin, urlparse
 
 from bs4 import BeautifulSoup
 
-from web_miner.core.config import (
+from core.config import (
     SOCIAL_DOMAINS,
     ALL_DOWNLOAD_EXTENSIONS,
     DOWNLOAD_EXTENSIONS,
 )
-from web_miner.core.logger import logger
+from core.logger import logger
 
 
 def extract_links(soup: BeautifulSoup, base_url: str) -> Dict[str, Any]:

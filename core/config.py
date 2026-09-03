@@ -1,3 +1,8 @@
+"""
+Config V6 — Central configuration for Web-Claw.
+All paths, regex patterns, and default settings.
+"""
+
 from pathlib import Path
 
 # ===== ROOT DIRECTORY =====
@@ -9,6 +14,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 OUTPUT_DIR = BASE_DIR / "outputs"
 MARKDOWN_DIR = OUTPUT_DIR / "markdown"
 JSON_DIR = OUTPUT_DIR / "json"
+CSV_DIR = OUTPUT_DIR / "csv"
+EXCEL_DIR = OUTPUT_DIR / "excel"
 
 # ===== LOG DIRECTORY =====
 
@@ -20,10 +27,8 @@ TARGET_FILE = BASE_DIR / "targets.txt"
 
 # ===== AUTO CREATE FOLDERS =====
 
-OUTPUT_DIR.mkdir(exist_ok=True)
-MARKDOWN_DIR.mkdir(exist_ok=True)
-JSON_DIR.mkdir(exist_ok=True)
-LOG_DIR.mkdir(exist_ok=True)
+for _dir in [OUTPUT_DIR, MARKDOWN_DIR, JSON_DIR, CSV_DIR, EXCEL_DIR, LOG_DIR]:
+    _dir.mkdir(parents=True, exist_ok=True)
 
 # ===== AUTO CREATE TARGET FILE =====
 
@@ -63,17 +68,20 @@ SOCIAL_DOMAINS = {
     "reddit": ["reddit.com"],
     "telegram": ["t.me", "telegram.me"],
     "zalo": ["zalo.me"],
+    "threads": ["threads.net"],
+    "discord": ["discord.gg", "discord.com"],
+    "whatsapp": ["wa.me", "whatsapp.com"],
 }
 
 # ===== DOWNLOADABLE FILE EXTENSIONS =====
 
 DOWNLOAD_EXTENSIONS = {
     "documents": [".pdf", ".doc", ".docx", ".ppt", ".pptx", ".xls", ".xlsx", ".odt", ".ods", ".odp", ".rtf", ".txt"],
-    "archives": [".zip", ".rar", ".7z", ".tar", ".gz", ".bz2"],
-    "images": [".jpg", ".jpeg", ".png", ".gif", ".svg", ".webp", ".ico", ".bmp", ".tiff"],
-    "media": [".mp3", ".mp4", ".avi", ".mkv", ".mov", ".wav", ".flac", ".ogg", ".webm"],
-    "data": [".csv", ".json", ".xml", ".sql", ".db", ".sqlite"],
-    "executables": [".exe", ".msi", ".dmg", ".apk", ".deb", ".rpm"],
+    "archives": [".zip", ".rar", ".7z", ".tar", ".gz", ".bz2", ".xz"],
+    "images": [".jpg", ".jpeg", ".png", ".gif", ".svg", ".webp", ".ico", ".bmp", ".tiff", ".avif"],
+    "media": [".mp3", ".mp4", ".avi", ".mkv", ".mov", ".wav", ".flac", ".ogg", ".webm", ".m4a"],
+    "data": [".csv", ".json", ".xml", ".sql", ".db", ".sqlite", ".parquet"],
+    "executables": [".exe", ".msi", ".dmg", ".apk", ".deb", ".rpm", ".appimage"],
 }
 
 ALL_DOWNLOAD_EXTENSIONS = []
@@ -84,12 +92,18 @@ for exts in DOWNLOAD_EXTENSIONS.values():
 
 REQUEST_TIMEOUT = 30
 MAX_RETRIES = 3
-RETRY_BACKOFF = 2  # seconds
+RETRY_BACKOFF = 2  # seconds base for exponential backoff
 
-USER_AGENT = (
-    "Mozilla/5.0 "
-    "(Windows NT 10.0; Win64; x64) "
-    "AppleWebKit/537.36 "
-    "(KHTML, like Gecko) "
-    "Chrome/125.0 Safari/537.36"
-)
+# ===== CRAWLER DEFAULTS =====
+
+DEFAULT_CRAWL_DEPTH = 1        # Only scrape the given URL
+MAX_CRAWL_DEPTH = 10           # Safety limit
+DEFAULT_MAX_PAGES = 50         # Max pages per crawl
+MAX_PAGES_LIMIT = 500          # Hard safety limit
+DEFAULT_DELAY_MIN = 0.5        # seconds
+DEFAULT_DELAY_MAX = 2.0        # seconds
+
+# ===== EXPORT FORMATS =====
+
+VALID_FORMATS = {"md", "json", "csv", "xlsx", "all"}
+DEFAULT_FORMAT = "all"

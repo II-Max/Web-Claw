@@ -9,7 +9,7 @@ from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
 
-from web_miner.core.logger import logger
+from core.logger import logger
 
 
 def extract_media(soup: BeautifulSoup, base_url: str) -> Dict[str, Any]:
@@ -43,7 +43,6 @@ def _get_images(soup: BeautifulSoup, base_url: str) -> List[Dict[str, str]]:
             or img.get("data-src", "")
             or img.get("data-lazy-src", "")
             or img.get("data-original", "")
-            or img.get("loading", "")
         )
 
         if not src or src.startswith("data:"):

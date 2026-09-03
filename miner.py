@@ -1,39 +1,43 @@
 """
-WebMiner V5 — Orchestrator that runs all extractors
-and exports data to Markdown + JSON.
+WebMiner V6 — Orchestrator that runs all extractors
+and exports data to multiple formats (Markdown, JSON, CSV, Excel).
 """
 
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Set
 from urllib.parse import urlparse
 
 from bs4 import BeautifulSoup
 
-from web_miner.core.scraper import fetch_page
-from web_miner.core.logger import logger
+from core.scraper import fetch_page, ScrapeOptions
+from core.logger import logger
 
 # Extractors
-from web_miner.core.extractors.metadata_extractor import extract_metadata
-from web_miner.core.extractors.text_extractor import extract_text_content
-from web_miner.core.extractors.link_extractor import extract_links
-from web_miner.core.extractors.media_extractor import extract_media
-from web_miner.core.extractors.contact_extractor import extract_contacts
-from web_miner.core.extractors.table_extractor import extract_tables
-from web_miner.core.extractors.form_extractor import extract_forms
-from web_miner.core.extractors.nav_extractor import extract_navigation
+from core.extractors.metadata_extractor import extract_metadata
+from core.extractors.text_extractor import extract_text_content
+from core.extractors.link_extractor import extract_links
+from core.extractors.media_extractor import extract_media
+from core.extractors.contact_extractor import extract_contacts
+from core.extractors.table_extractor import extract_tables
+from core.extractors.form_extractor import extract_forms
+from core.extractors.nav_extractor import extract_navigation
 
 # Exporters
-from web_miner.core.exporters.markdown_exporter import export_markdown
-from web_miner.core.exporters.json_exporter import export_json
+from core.exporters.markdown_exporter import export_markdown
+from core.exporters.json_exporter import export_json
+from core.exporters.csv_exporter import export_csv
+from core.exporters.excel_exporter import export_excel
 
 
 class WebMiner:
     """
-    Main orchestrator for DataMine V5.
-    Fetches a page, runs all extractors, exports to MD + JSON.
+    Main orchestrator for Web-Claw V6.
+    Fetches a page, runs all extractors, exports to multiple formats.
     """
 
-    def __init__(self, url: str) -> None:
+    def __init__(self, url: str, options: Optional[ScrapeOptions] = None, formats: Optional[Set[str]] = None) -> None:
         self.url = url
+        self.options = options or ScrapeOptions()
+        self.formats = formats or {"md", "json", "csv", "xlsx"}
         self.html: Optional[str] = None
         self.soup: Optional[BeautifulSoup] = None
         self.data: Dict[str, Any] = {}
@@ -48,20 +52,15 @@ class WebMiner:
         name = domain.replace(".", "_").replace(":", "_")
         if path:
             name += f"_{path}"
-        # Keep it reasonable length
         return name[:80]
 
     def fetch(self) -> bool:
         """Fetch the webpage. Returns True if successful."""
-        self.html, self.soup = fetch_page(self.url)
+        self.html, self.soup = fetch_page(self.url, self.options)
         return self.html is not None and self.soup is not None
 
     def mine_all(self) -> Dict[str, Any]:
-        """
-        Run ALL extractors and collect data.
-        Returns the complete extracted data dict.
-        """
-
+        """Run ALL extractors and collect data."""
         if not self.html or not self.soup:
             logger.error("Cannot mine: page not fetched yet")
             return {}
@@ -83,29 +82,30 @@ class WebMiner:
         return self.data
 
     def export_all(self) -> Dict[str, str]:
-        """
-        Export all data to Markdown + JSON.
-        Returns dict with paths to output directories.
-        """
-
+        """Export all data to requested formats."""
         if not self.data:
             logger.warning("No data to export. Run mine_all() first.")
             return {}
 
-        md_dir = export_markdown(self.data, self.site_name)
-        json_dir = export_json(self.data, self.site_name)
+        paths = {}
+        fmts = self.formats
 
-        return {
-            "markdown": str(md_dir),
-            "json": str(json_dir),
-        }
+        if "md" in fmts or "all" in fmts:
+            paths["markdown"] = str(export_markdown(self.data, self.site_name))
+
+        if "json" in fmts or "all" in fmts:
+            paths["json"] = str(export_json(self.data, self.site_name))
+
+        if "csv" in fmts or "all" in fmts:
+            paths["csv"] = str(export_csv(self.data, self.site_name))
+
+        if "xlsx" in fmts or "all" in fmts:
+            paths["excel"] = str(export_excel(self.data, self.site_name))
+
+        return paths
 
     def run(self) -> Dict[str, Any]:
-        """
-        Complete pipeline: fetch → mine → export.
-        Returns the extracted data dict.
-        """
-
+        """Complete pipeline: fetch -> mine -> export."""
         if not self.fetch():
             logger.error(f"Failed to fetch: {self.url}")
             return {}
@@ -114,9 +114,8 @@ class WebMiner:
         paths = self.export_all()
 
         logger.info(
-            f"Pipeline complete for {self.url} → "
-            f"MD: {paths.get('markdown', 'N/A')}, "
-            f"JSON: {paths.get('json', 'N/A')}"
+            f"Pipeline complete for {self.url} -> "
+            + ", ".join(f"{k}: {v}" for k, v in paths.items())
         )
 
         return self.data

@@ -166,3 +166,231 @@
 2026-07-17 14:56:00,707 - INFO - Markdown export complete: C:\Users\Phamv\OneDrive\Desktop\Data-Mining\web_miner\outputs\markdown\benhvientimhanoi_vn_vn_cong_thong-tin_gioi-thieu-chung
 2026-07-17 14:56:00,708 - INFO - Exporting JSON to: C:\Users\Phamv\OneDrive\Desktop\Data-Mining\web_miner\outputs\json\benhvientimhanoi_vn_vn_cong_thong-tin_gioi-thieu-chung
 2026-07-17 14:56:00,712 - INFO - JSON export complete: C:\Users\Phamv\OneDrive\Desktop\Data-Mining\web_miner\outputs\json\benhvientimhanoi_vn_vn_cong_thong-tin_gioi-thieu-chung
+2026-09-04 03:25:06,322 - INFO - [Requests] Connecting to: https://quotes.toscrape.com (attempt 1/3)
+2026-09-04 03:25:07,439 - INFO - [Requests] Success: https://quotes.toscrape.com (1896 bytes)
+2026-09-04 03:25:07,440 - INFO - Page appears to be JS-rendered (little content found). Auto-falling back to headless browser...
+2026-09-04 03:25:07,465 - INFO - [Playwright] Launching headless browser for: https://quotes.toscrape.com (attempt 1/3)
+2026-09-04 03:25:07,700 - INFO - Chromium not available, trying Firefox...
+2026-09-04 03:25:07,702 - ERROR - No browser available. Run: playwright install chromium
+Error: BrowserType.launch: Executable doesn't exist at /home/ii-max/.cache/ms-playwright/firefox-1538/firefox/firefox
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝
+2026-09-04 03:25:07,706 - WARNING - Playwright fallback failed, using requests result
+2026-09-04 03:25:07,707 - INFO - Starting full mining of: https://quotes.toscrape.com
+2026-09-04 03:25:07,707 - INFO - Extracting metadata...
+2026-09-04 03:25:07,708 - INFO - Metadata extracted: title=''
+2026-09-04 03:25:07,708 - INFO - Extracting text content...
+2026-09-04 03:25:07,709 - INFO - Text extracted: 0 headings, 0 paragraphs, 0 lists, 0 code blocks
+2026-09-04 03:25:07,709 - INFO - Extracting links...
+2026-09-04 03:25:07,710 - INFO - Links extracted: 0 internal, 0 external, 0 social, 0 downloads
+2026-09-04 03:25:07,710 - INFO - Extracting media...
+2026-09-04 03:25:07,710 - INFO - Media extracted: 0 images, 0 videos, 0 audio
+2026-09-04 03:25:07,711 - INFO - Extracting contacts...
+2026-09-04 03:25:07,712 - INFO - Contacts extracted: 0 emails, 0 phones, 0 social profiles
+2026-09-04 03:25:07,712 - INFO - Extracting tables...
+2026-09-04 03:25:07,717 - INFO - No HTML tables found on page
+2026-09-04 03:25:07,717 - INFO - Extracting forms...
+2026-09-04 03:25:07,718 - INFO - Forms extracted: 0
+2026-09-04 03:25:07,718 - INFO - Extracting navigation & resources...
+2026-09-04 03:25:07,718 - INFO - Navigation extracted: 0 menus, 0 breadcrumbs, 0 CSS, 0 JS
+2026-09-04 03:25:07,719 - INFO - Full mining complete
+2026-09-04 03:25:07,719 - INFO - Exporting Markdown to: /home/ii-max/Documents/Web-Claw/outputs/markdown/quotes_toscrape_com
+2026-09-04 03:25:07,720 - INFO - Markdown export complete: /home/ii-max/Documents/Web-Claw/outputs/markdown/quotes_toscrape_com
+2026-09-04 03:25:07,720 - INFO - Exporting JSON to: /home/ii-max/Documents/Web-Claw/outputs/json/quotes_toscrape_com
+2026-09-04 03:25:07,721 - INFO - JSON export complete: /home/ii-max/Documents/Web-Claw/outputs/json/quotes_toscrape_com
+2026-09-04 03:25:07,722 - INFO - Exporting CSV to: /home/ii-max/Documents/Web-Claw/outputs/csv/quotes_toscrape_com
+2026-09-04 03:25:07,722 - INFO - CSV export complete: /home/ii-max/Documents/Web-Claw/outputs/csv/quotes_toscrape_com
+2026-09-04 03:25:07,722 - INFO - Exporting Excel to: /home/ii-max/Documents/Web-Claw/outputs/excel/quotes_toscrape_com/data.xlsx
+2026-09-04 03:25:07,768 - INFO - Excel export complete: /home/ii-max/Documents/Web-Claw/outputs/excel/quotes_toscrape_com/data.xlsx
+2026-09-04 03:28:47,103 - INFO - [Requests] Connecting to: https://httpbin.org/html (attempt 1/3)
+2026-09-04 03:28:48,062 - INFO - [Requests] Success: https://httpbin.org/html (3739 bytes)
+2026-09-04 03:28:48,065 - INFO - Starting full mining of: https://httpbin.org/html
+2026-09-04 03:28:48,066 - INFO - Extracting metadata...
+2026-09-04 03:28:48,066 - INFO - Metadata extracted: title=''
+2026-09-04 03:28:48,067 - INFO - Extracting text content...
+2026-09-04 03:28:48,068 - INFO - Text extracted: 1 headings, 1 paragraphs, 0 lists, 0 code blocks
+2026-09-04 03:28:48,068 - INFO - Extracting links...
+2026-09-04 03:28:48,069 - INFO - Links extracted: 0 internal, 0 external, 0 social, 0 downloads
+2026-09-04 03:28:48,069 - INFO - Extracting media...
+2026-09-04 03:28:48,070 - INFO - Media extracted: 0 images, 0 videos, 0 audio
+2026-09-04 03:28:48,070 - INFO - Extracting contacts...
+2026-09-04 03:28:48,072 - INFO - Contacts extracted: 0 emails, 0 phones, 0 social profiles
+2026-09-04 03:28:48,073 - INFO - Extracting tables...
+2026-09-04 03:28:48,078 - INFO - No HTML tables found on page
+2026-09-04 03:28:48,079 - INFO - Extracting forms...
+2026-09-04 03:28:48,079 - INFO - Forms extracted: 0
+2026-09-04 03:28:48,079 - INFO - Extracting navigation & resources...
+2026-09-04 03:28:48,080 - INFO - Navigation extracted: 0 menus, 0 breadcrumbs, 0 CSS, 0 JS
+2026-09-04 03:28:48,080 - INFO - Full mining complete
+2026-09-04 03:28:48,081 - INFO - Exporting Markdown to: /home/ii-max/Documents/Web-Claw/outputs/markdown/httpbin_org_html
+2026-09-04 03:28:48,081 - INFO - Markdown export complete: /home/ii-max/Documents/Web-Claw/outputs/markdown/httpbin_org_html
+2026-09-04 03:28:48,082 - INFO - Exporting JSON to: /home/ii-max/Documents/Web-Claw/outputs/json/httpbin_org_html
+2026-09-04 03:28:48,083 - INFO - JSON export complete: /home/ii-max/Documents/Web-Claw/outputs/json/httpbin_org_html
+2026-09-04 03:28:48,083 - INFO - Exporting CSV to: /home/ii-max/Documents/Web-Claw/outputs/csv/httpbin_org_html
+2026-09-04 03:28:48,086 - INFO - CSV export complete: /home/ii-max/Documents/Web-Claw/outputs/csv/httpbin_org_html
+2026-09-04 03:28:48,086 - INFO - Exporting Excel to: /home/ii-max/Documents/Web-Claw/outputs/excel/httpbin_org_html/data.xlsx
+2026-09-04 03:28:48,134 - INFO - Excel export complete: /home/ii-max/Documents/Web-Claw/outputs/excel/httpbin_org_html/data.xlsx
+2026-09-04 03:39:18,437 - INFO - [Requests] Connecting to: https://quotes.toscrape.com (attempt 1/3)
+2026-09-04 03:39:19,796 - INFO - [Requests] Success: https://quotes.toscrape.com (1884 bytes)
+2026-09-04 03:39:19,797 - INFO - Page appears to be JS-rendered (little content found). Auto-falling back to headless browser...
+2026-09-04 03:39:19,822 - INFO - [Playwright] Launching headless browser for: https://quotes.toscrape.com (attempt 1/3)
+2026-09-04 03:39:24,971 - INFO - [Playwright] Success: https://quotes.toscrape.com (10968 bytes)
+2026-09-04 03:39:24,974 - INFO - Starting full mining of: https://quotes.toscrape.com
+2026-09-04 03:39:24,974 - INFO - Extracting metadata...
+2026-09-04 03:39:24,978 - INFO - Metadata extracted: title='Quotes to Scrape'
+2026-09-04 03:39:24,978 - INFO - Extracting text content...
+2026-09-04 03:39:24,982 - INFO - Text extracted: 2 headings, 2 paragraphs, 1 lists, 0 code blocks
+2026-09-04 03:39:24,983 - INFO - Extracting links...
+2026-09-04 03:39:24,984 - INFO - Links extracted: 53 internal, 2 external, 0 social, 0 downloads
+2026-09-04 03:39:24,984 - INFO - Extracting media...
+2026-09-04 03:39:24,985 - INFO - Media extracted: 0 images, 0 videos, 0 audio
+2026-09-04 03:39:24,985 - INFO - Extracting contacts...
+2026-09-04 03:39:24,994 - INFO - Contacts extracted: 0 emails, 0 phones, 0 social profiles
+2026-09-04 03:39:24,995 - INFO - Extracting tables...
+2026-09-04 03:39:25,005 - INFO - No HTML tables found on page
+2026-09-04 03:39:25,005 - INFO - Extracting forms...
+2026-09-04 03:39:25,006 - INFO - Forms extracted: 0
+2026-09-04 03:39:25,006 - INFO - Extracting navigation & resources...
+2026-09-04 03:39:25,007 - INFO - Navigation extracted: 1 menus, 0 breadcrumbs, 2 CSS, 0 JS
+2026-09-04 03:39:25,008 - INFO - Full mining complete
+2026-09-04 03:39:25,008 - INFO - Exporting Markdown to: /home/ii-max/Documents/Web-Claw/outputs/markdown/quotes_toscrape_com
+2026-09-04 03:39:25,009 - INFO - Markdown export complete: /home/ii-max/Documents/Web-Claw/outputs/markdown/quotes_toscrape_com
+2026-09-04 03:39:25,009 - INFO - Exporting JSON to: /home/ii-max/Documents/Web-Claw/outputs/json/quotes_toscrape_com
+2026-09-04 03:39:25,018 - INFO - JSON export complete: /home/ii-max/Documents/Web-Claw/outputs/json/quotes_toscrape_com
+2026-09-04 03:39:25,019 - INFO - Exporting CSV to: /home/ii-max/Documents/Web-Claw/outputs/csv/quotes_toscrape_com
+2026-09-04 03:39:25,020 - INFO - CSV export complete: /home/ii-max/Documents/Web-Claw/outputs/csv/quotes_toscrape_com
+2026-09-04 03:39:25,020 - INFO - Exporting Excel to: /home/ii-max/Documents/Web-Claw/outputs/excel/quotes_toscrape_com/data.xlsx
+2026-09-04 03:39:25,071 - INFO - Excel export complete: /home/ii-max/Documents/Web-Claw/outputs/excel/quotes_toscrape_com/data.xlsx
+2026-09-04 03:42:04,149 - INFO - [Requests] Connecting to: https://books.toscrape.com (attempt 1/3)
+2026-09-04 03:42:05,713 - INFO - [Requests] Success: https://books.toscrape.com (5033 bytes)
+2026-09-04 03:42:05,714 - INFO - Page appears to be JS-rendered (little content found). Auto-falling back to headless browser...
+2026-09-04 03:42:05,737 - INFO - [Playwright] Launching headless browser for: https://books.toscrape.com (attempt 1/3)
+2026-09-04 03:42:10,758 - INFO - [Playwright] Success: https://books.toscrape.com (51004 bytes)
+2026-09-04 03:42:10,759 - INFO - Starting full mining of: https://books.toscrape.com
+2026-09-04 03:42:10,759 - INFO - Extracting metadata...
+2026-09-04 03:42:10,762 - INFO - Metadata extracted: title='All products | Books to Scrape - Sandbox'
+2026-09-04 03:42:10,763 - INFO - Extracting text content...
+2026-09-04 03:42:10,765 - INFO - Text extracted: 21 headings, 0 paragraphs, 5 lists, 0 code blocks
+2026-09-04 03:42:10,766 - INFO - Extracting links...
+2026-09-04 03:42:10,769 - INFO - Links extracted: 94 internal, 0 external, 0 social, 0 downloads
+2026-09-04 03:42:10,770 - INFO - Extracting media...
+2026-09-04 03:42:10,771 - INFO - Media extracted: 20 images, 0 videos, 0 audio
+2026-09-04 03:42:10,771 - INFO - Extracting contacts...
+2026-09-04 03:42:10,797 - INFO - Contacts extracted: 0 emails, 0 phones, 0 social profiles
+2026-09-04 03:42:10,798 - INFO - Extracting tables...
+2026-09-04 03:42:10,822 - INFO - No HTML tables found on page
+2026-09-04 03:42:10,823 - INFO - Extracting forms...
+2026-09-04 03:42:10,824 - INFO - Forms extracted: 21
+2026-09-04 03:42:10,824 - INFO - Extracting navigation & resources...
+2026-09-04 03:42:10,826 - INFO - Navigation extracted: 0 menus, 0 breadcrumbs, 3 CSS, 6 JS
+2026-09-04 03:42:10,827 - INFO - Full mining complete
+2026-09-04 03:42:10,827 - INFO - Exporting Markdown to: /home/ii-max/Documents/Web-Claw/outputs/markdown/books_toscrape_com
+2026-09-04 03:42:10,828 - INFO - Markdown export complete: /home/ii-max/Documents/Web-Claw/outputs/markdown/books_toscrape_com
+2026-09-04 03:42:10,829 - INFO - Exporting JSON to: /home/ii-max/Documents/Web-Claw/outputs/json/books_toscrape_com
+2026-09-04 03:42:10,831 - INFO - JSON export complete: /home/ii-max/Documents/Web-Claw/outputs/json/books_toscrape_com
+2026-09-04 03:42:10,832 - INFO - Exporting CSV to: /home/ii-max/Documents/Web-Claw/outputs/csv/books_toscrape_com
+2026-09-04 03:42:10,832 - INFO - CSV export complete: /home/ii-max/Documents/Web-Claw/outputs/csv/books_toscrape_com
+2026-09-04 03:42:10,833 - INFO - Exporting Excel to: /home/ii-max/Documents/Web-Claw/outputs/excel/books_toscrape_com/data.xlsx
+2026-09-04 03:42:10,884 - INFO - Excel export complete: /home/ii-max/Documents/Web-Claw/outputs/excel/books_toscrape_com/data.xlsx
+2026-09-04 04:02:20,969 - DEBUG - Anti-detection delay: 1.3s
+2026-09-04 04:02:22,257 - INFO - [Requests] Connecting to: https://test.aptisone.vn/take-exam/66d4d502-a940-4ece-9796-eabbd306dd49/SPEAKING?submissionId=7ec4a307-3911-463a-bfe4-9028ec39a3bf (attempt 1/3)
+2026-09-04 04:02:22,376 - INFO - [Requests] Success: https://test.aptisone.vn/take-exam/66d4d502-a940-4ece-9796-eabbd306dd49/SPEAKING?submissionId=7ec4a307-3911-463a-bfe4-9028ec39a3bf (21402 bytes)
+2026-09-04 04:02:22,378 - INFO - Page appears to be JS-rendered (little content found). Auto-falling back to headless browser...
+2026-09-04 04:02:22,409 - INFO - [Playwright] Launching headless browser for: https://test.aptisone.vn/take-exam/66d4d502-a940-4ece-9796-eabbd306dd49/SPEAKING?submissionId=7ec4a307-3911-463a-bfe4-9028ec39a3bf (attempt 1/3)
+2026-09-04 04:02:25,691 - INFO - [Playwright] Success: https://test.aptisone.vn/take-exam/66d4d502-a940-4ece-9796-eabbd306dd49/SPEAKING?submissionId=7ec4a307-3911-463a-bfe4-9028ec39a3bf (135986 bytes)
+2026-09-04 04:02:25,693 - INFO - Starting full mining of: https://test.aptisone.vn/take-exam/66d4d502-a940-4ece-9796-eabbd306dd49/SPEAKING?submissionId=7ec4a307-3911-463a-bfe4-9028ec39a3bf
+2026-09-04 04:02:25,693 - INFO - Extracting metadata...
+2026-09-04 04:02:25,694 - INFO - Metadata extracted: title='Đăng nhập - Aptis One'
+2026-09-04 04:02:25,695 - INFO - Extracting text content...
+2026-09-04 04:02:25,696 - INFO - Text extracted: 0 headings, 25 paragraphs, 0 lists, 0 code blocks
+2026-09-04 04:02:25,697 - INFO - Extracting links...
+2026-09-04 04:02:25,698 - INFO - Links extracted: 10 internal, 0 external, 0 social, 0 downloads
+2026-09-04 04:02:25,698 - INFO - Extracting media...
+2026-09-04 04:02:25,699 - INFO - Media extracted: 7 images, 0 videos, 0 audio
+2026-09-04 04:02:25,699 - INFO - Extracting contacts...
+2026-09-04 04:02:25,714 - INFO - Contacts extracted: 0 emails, 1 phones, 0 social profiles
+2026-09-04 04:02:25,715 - INFO - Extracting tables...
+2026-09-04 04:02:25,737 - INFO - No HTML tables found on page
+2026-09-04 04:02:25,738 - INFO - Extracting forms...
+2026-09-04 04:02:25,738 - INFO - Forms extracted: 3
+2026-09-04 04:02:25,739 - INFO - Extracting navigation & resources...
+2026-09-04 04:02:25,741 - INFO - Navigation extracted: 1 menus, 0 breadcrumbs, 1 CSS, 18 JS
+2026-09-04 04:02:25,742 - INFO - Full mining complete
+2026-09-04 04:02:25,742 - INFO - Exporting Markdown to: /home/ii-max/Documents/Web-Claw/outputs/markdown/test_aptisone_vn_take-exam_66d4d502-a940-4ece-9796-eabbd306dd49_SPEAKING
+2026-09-04 04:02:25,743 - INFO - Markdown export complete: /home/ii-max/Documents/Web-Claw/outputs/markdown/test_aptisone_vn_take-exam_66d4d502-a940-4ece-9796-eabbd306dd49_SPEAKING
+2026-09-04 04:02:25,744 - INFO - Exporting JSON to: /home/ii-max/Documents/Web-Claw/outputs/json/test_aptisone_vn_take-exam_66d4d502-a940-4ece-9796-eabbd306dd49_SPEAKING
+2026-09-04 04:02:25,745 - INFO - JSON export complete: /home/ii-max/Documents/Web-Claw/outputs/json/test_aptisone_vn_take-exam_66d4d502-a940-4ece-9796-eabbd306dd49_SPEAKING
+2026-09-04 04:02:25,746 - INFO - Exporting CSV to: /home/ii-max/Documents/Web-Claw/outputs/csv/test_aptisone_vn_take-exam_66d4d502-a940-4ece-9796-eabbd306dd49_SPEAKING
+2026-09-04 04:02:25,746 - INFO - CSV export complete: /home/ii-max/Documents/Web-Claw/outputs/csv/test_aptisone_vn_take-exam_66d4d502-a940-4ece-9796-eabbd306dd49_SPEAKING
+2026-09-04 04:02:25,747 - INFO - Exporting Excel to: /home/ii-max/Documents/Web-Claw/outputs/excel/test_aptisone_vn_take-exam_66d4d502-a940-4ece-9796-eabbd306dd49_SPEAKING/data.xlsx
+2026-09-04 04:02:25,801 - INFO - Excel export complete: /home/ii-max/Documents/Web-Claw/outputs/excel/test_aptisone_vn_take-exam_66d4d502-a940-4ece-9796-eabbd306dd49_SPEAKING/data.xlsx
+2026-09-04 04:04:48,449 - DEBUG - Anti-detection delay: 0.9s
+2026-09-04 04:04:49,344 - INFO - [Requests] Connecting to: https://web.facebook.com/phamvanchung2127 (attempt 1/3)
+2026-09-04 04:04:50,018 - INFO - [Requests] Success: https://web.facebook.com/phamvanchung2127 (161910 bytes)
+2026-09-04 04:04:50,019 - INFO - Page appears to be JS-rendered (little content found). Auto-falling back to headless browser...
+2026-09-04 04:04:50,044 - INFO - [Playwright] Launching headless browser for: https://web.facebook.com/phamvanchung2127 (attempt 1/3)
+2026-09-04 04:04:54,991 - INFO - [Playwright] Success: https://web.facebook.com/phamvanchung2127 (1040389 bytes)
+2026-09-04 04:04:54,992 - INFO - Starting full mining of: https://web.facebook.com/phamvanchung2127
+2026-09-04 04:04:54,993 - INFO - Extracting metadata...
+2026-09-04 04:04:54,996 - INFO - Metadata extracted: title='Pham Van Chung | Facebook'
+2026-09-04 04:04:54,997 - INFO - Extracting text content...
+2026-09-04 04:04:55,002 - INFO - Text extracted: 4 headings, 0 paragraphs, 1 lists, 0 code blocks
+2026-09-04 04:04:55,003 - INFO - Extracting links...
+2026-09-04 04:04:55,003 - INFO - Links extracted: 0 internal, 0 external, 26 social, 0 downloads
+2026-09-04 04:04:55,004 - INFO - Extracting media...
+2026-09-04 04:04:55,005 - INFO - Media extracted: 6 images, 0 videos, 0 audio
+2026-09-04 04:04:55,005 - INFO - Extracting contacts...
+2026-09-04 04:04:55,044 - INFO - Contacts extracted: 0 emails, 0 phones, 16 social profiles
+2026-09-04 04:04:55,044 - INFO - Extracting tables...
+2026-09-04 04:04:55,123 - INFO - No HTML tables found on page
+2026-09-04 04:04:55,123 - INFO - Extracting forms...
+2026-09-04 04:04:55,124 - INFO - Forms extracted: 2
+2026-09-04 04:04:55,124 - INFO - Extracting navigation & resources...
+2026-09-04 04:04:55,130 - INFO - Navigation extracted: 0 menus, 0 breadcrumbs, 2 CSS, 113 JS
+2026-09-04 04:04:55,130 - INFO - Full mining complete
+2026-09-04 04:04:55,131 - INFO - Exporting Markdown to: /home/ii-max/Documents/Web-Claw/outputs/markdown/web_facebook_com_phamvanchung2127
+2026-09-04 04:04:55,132 - INFO - Markdown export complete: /home/ii-max/Documents/Web-Claw/outputs/markdown/web_facebook_com_phamvanchung2127
+2026-09-04 04:04:55,132 - INFO - Exporting JSON to: /home/ii-max/Documents/Web-Claw/outputs/json/web_facebook_com_phamvanchung2127
+2026-09-04 04:04:55,135 - INFO - JSON export complete: /home/ii-max/Documents/Web-Claw/outputs/json/web_facebook_com_phamvanchung2127
+2026-09-04 04:04:55,135 - INFO - Exporting CSV to: /home/ii-max/Documents/Web-Claw/outputs/csv/web_facebook_com_phamvanchung2127
+2026-09-04 04:04:55,136 - INFO - CSV export complete: /home/ii-max/Documents/Web-Claw/outputs/csv/web_facebook_com_phamvanchung2127
+2026-09-04 04:04:55,137 - INFO - Exporting Excel to: /home/ii-max/Documents/Web-Claw/outputs/excel/web_facebook_com_phamvanchung2127/data.xlsx
+2026-09-04 04:04:55,187 - INFO - Excel export complete: /home/ii-max/Documents/Web-Claw/outputs/excel/web_facebook_com_phamvanchung2127/data.xlsx
+2026-09-04 04:06:22,555 - DEBUG - Anti-detection delay: 1.2s
+2026-09-04 04:06:23,761 - INFO - [Requests] Connecting to: https://web.facebook.com/ly.nha.9659 (attempt 1/3)
+2026-09-04 04:06:24,369 - INFO - [Requests] Success: https://web.facebook.com/ly.nha.9659 (119219 bytes)
+2026-09-04 04:06:24,370 - INFO - Page appears to be JS-rendered (little content found). Auto-falling back to headless browser...
+2026-09-04 04:06:24,394 - INFO - [Playwright] Launching headless browser for: https://web.facebook.com/ly.nha.9659 (attempt 1/3)
+2026-09-04 04:06:29,337 - INFO - [Playwright] Success: https://web.facebook.com/ly.nha.9659 (741231 bytes)
+2026-09-04 04:06:29,338 - INFO - Starting full mining of: https://web.facebook.com/ly.nha.9659
+2026-09-04 04:06:29,338 - INFO - Extracting metadata...
+2026-09-04 04:06:29,341 - INFO - Metadata extracted: title='Phạm Lý (@ly.nha.9659) • Facebook, Connect with fr...'
+2026-09-04 04:06:29,342 - INFO - Extracting text content...
+2026-09-04 04:06:29,347 - INFO - Text extracted: 6 headings, 0 paragraphs, 1 lists, 0 code blocks
+2026-09-04 04:06:29,347 - INFO - Extracting links...
+2026-09-04 04:06:29,348 - INFO - Links extracted: 0 internal, 0 external, 19 social, 0 downloads
+2026-09-04 04:06:29,349 - INFO - Extracting media...
+2026-09-04 04:06:29,350 - INFO - Media extracted: 4 images, 0 videos, 0 audio
+2026-09-04 04:06:29,350 - INFO - Extracting contacts...
+2026-09-04 04:06:29,393 - INFO - Contacts extracted: 0 emails, 0 phones, 13 social profiles
+2026-09-04 04:06:29,393 - INFO - Extracting tables...
+2026-09-04 04:06:29,458 - INFO - No HTML tables found on page
+2026-09-04 04:06:29,458 - INFO - Extracting forms...
+2026-09-04 04:06:29,459 - INFO - Forms extracted: 2
+2026-09-04 04:06:29,459 - INFO - Extracting navigation & resources...
+2026-09-04 04:06:29,464 - INFO - Navigation extracted: 0 menus, 0 breadcrumbs, 2 CSS, 111 JS
+2026-09-04 04:06:29,464 - INFO - Full mining complete
+2026-09-04 04:06:29,465 - INFO - Exporting Markdown to: /home/ii-max/Documents/Web-Claw/outputs/markdown/web_facebook_com_ly.nha.9659
+2026-09-04 04:06:29,466 - INFO - Markdown export complete: /home/ii-max/Documents/Web-Claw/outputs/markdown/web_facebook_com_ly.nha.9659
+2026-09-04 04:06:29,466 - INFO - Exporting JSON to: /home/ii-max/Documents/Web-Claw/outputs/json/web_facebook_com_ly.nha.9659
+2026-09-04 04:06:29,469 - INFO - JSON export complete: /home/ii-max/Documents/Web-Claw/outputs/json/web_facebook_com_ly.nha.9659
+2026-09-04 04:06:29,469 - INFO - Exporting CSV to: /home/ii-max/Documents/Web-Claw/outputs/csv/web_facebook_com_ly.nha.9659
+2026-09-04 04:06:29,470 - INFO - CSV export complete: /home/ii-max/Documents/Web-Claw/outputs/csv/web_facebook_com_ly.nha.9659
+2026-09-04 04:06:29,470 - INFO - Exporting Excel to: /home/ii-max/Documents/Web-Claw/outputs/excel/web_facebook_com_ly.nha.9659/data.xlsx
+2026-09-04 04:06:29,520 - INFO - Excel export complete: /home/ii-max/Documents/Web-Claw/outputs/excel/web_facebook_com_ly.nha.9659/data.xlsx

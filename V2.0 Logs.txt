@@ -1,0 +1,170 @@
+# Nâng Cấp Toàn Diện Web-Claw — Công Cụ Cào Dữ Liệu Web
+
+## Tổng quan
+
+Dự án hiện tại (DataMine V5) có nền tảng code tốt nhưng tồn tại nhiều **vấn đề nghiêm trọng** ngăn nó hoạt động thực tế:
+
+1. **Import paths bị hỏng** — Code sử dụng `from web_miner.core...` nhưng project folder tên `Web-Claw` và không có package `web_miner`. File `app` là file rỗng 4 bytes thay vì thư mục.
+2. **Chỉ hỗ trợ static HTML** — Sử dụng `requests` thuần, không thể cào các website render bằng JavaScript (React, Angular, Vue...).
+3. **Không có anti-detection** — Không random User-Agent, không delay, không proxy → dễ bị chặn.
+4. **Thiếu hỗ trợ auth/cookies** — Không thể cào website yêu cầu đăng nhập.
+5. **Chỉ xuất Markdown + JSON** — Thiếu CSV/Excel thông dụng.
+6. **Chỉ cào 1 trang** — Không crawl multi-page/pagination.
+
+## Proposed Changes
+
+### Phase 1: Sửa Import Paths & Cấu Trúc Project
+
+> [!CAUTION]
+> Đây là vấn đề **critical** — project hiện tại KHÔNG THỂ CHẠY ĐƯỢC do import paths sai hoàn toàn.
+
+#### [MODIFY] Toàn bộ file `.py` — Đổi import từ `web_miner.xxx` → relative import
+- Thay tất cả `from web_miner.core...` → `from core...` hoặc relative import
+- Thay `from web_miner.miner` → `from miner`
+- Xóa file `app` (4 bytes rỗng, vô dụng)
+- Sửa `__init__.py` root nếu cần
+
+---
+
+### Phase 2: Nâng Cấp Scraper — Hỗ Trợ Đa Định Dạng & Bảo Mật
+
+#### [MODIFY] [scraper.py](file:///home/ii-max/Documents/Web-Claw/core/scraper.py) — Nâng cấp toàn diện
+
+**2a. Headless Browser (Playwright)**
+- Thêm fallback: thử `requests` trước → nếu nội dung trống/ngắn hoặc user chỉ định → chuyển sang Playwright
+- Playwright cho phép cào website render JS (SPA), xử lý Cloudflare challenge cơ bản
+- Hỗ trợ cả Chromium/Firefox
+
+**2b. Anti-Detection**
+- Random User-Agent pool (10+ UA strings thực tế)
+- Random delay giữa các request (1-3 giây)
+- Referer header tự động
+- Accept-Language, Accept-Encoding headers
+
+**2c. SSL/TLS Flexibility**
+- Mặc định verify SSL = True
+- Thêm option `--no-verify` cho self-signed certs
+- Hỗ trợ custom CA bundle
+
+**2d. Cookie & Authentication**
+- `--cookie "name=value"` từ CLI
+- `--cookie-file cookies.json` để load cookie session
+- `--header "Authorization: Bearer xxx"` cho API tokens
+- `--auth user:pass` cho HTTP Basic Auth
+
+**2e. Proxy Support**
+- `--proxy http://host:port` cho HTTP/HTTPS proxy
+- `--proxy socks5://host:port` cho SOCKS proxy
+
+#### [NEW] [core/user_agents.py](file:///home/ii-max/Documents/Web-Claw/core/user_agents.py)
+- Pool 15+ User-Agent strings cập nhật (Chrome, Firefox, Edge, Safari trên Win/Mac/Linux)
+
+---
+
+### Phase 3: Thêm Xuất Dữ Liệu CSV/Excel
+
+#### [NEW] [core/exporters/csv_exporter.py](file:///home/ii-max/Documents/Web-Claw/core/exporters/csv_exporter.py)
+- Xuất bảng → CSV
+- Xuất links, contacts, media → CSV riêng
+- Encoding UTF-8 BOM cho Excel compatibility
+
+#### [NEW] [core/exporters/excel_exporter.py](file:///home/ii-max/Documents/Web-Claw/core/exporters/excel_exporter.py)
+- Xuất tất cả dữ liệu vào 1 file `.xlsx` nhiều sheet
+- Mỗi sheet = 1 loại dữ liệu (Links, Contacts, Tables, Media...)
+
+---
+
+### Phase 4: Multi-page Crawling
+
+#### [NEW] [core/crawler.py](file:///home/ii-max/Documents/Web-Claw/core/crawler.py)
+- `--depth N` — Crawl sâu N cấp từ URL gốc
+- `--max-pages N` — Giới hạn tổng số trang crawl
+- `--same-domain` — Chỉ follow link cùng domain
+- Tự động loại bỏ duplicate URLs
+- Gộp dữ liệu từ tất cả các trang
+
+---
+
+### Phase 5: Cập Nhật CLI & Entry Point
+
+#### [MODIFY] [main.py](file:///home/ii-max/Documents/Web-Claw/main.py)
+- Thêm tất cả CLI arguments mới
+- Thêm `--js` flag để force dùng headless browser
+- Thêm `--format {md,json,csv,xlsx,all}` cho output format
+- Thêm `--output-dir` custom output directory
+- Thêm `--depth`, `--max-pages` cho crawling
+- Thêm `--delay N` custom delay
+- Thêm `--proxy`, `--cookie`, `--cookie-file`, `--header`, `--auth`
+- Thêm `--no-verify` cho SSL
+- Thêm `--quiet` suppress console output
+
+#### [MODIFY] [miner.py](file:///home/ii-max/Documents/Web-Claw/miner.py)
+- Nhận options dict thay vì chỉ URL
+- Truyền options xuống scraper
+- Gọi thêm csv/excel exporters khi được yêu cầu
+
+---
+
+### Phase 6: Config & Requirements
+
+#### [MODIFY] [requirements.txt](file:///home/ii-max/Documents/Web-Claw/requirements.txt)
+```
+requests
+beautifulsoup4
+lxml
+html5lib
+pandas
+openpyxl
+rich
+playwright
+PySocks
+```
+
+#### [MODIFY] [core/config.py](file:///home/ii-max/Documents/Web-Claw/core/config.py)
+- Thêm config cho crawler defaults
+- Thêm config cho output formats
+
+---
+
+### Phase 7: README & Documentation
+
+#### [MODIFY] [README.md](file:///home/ii-max/Documents/Web-Claw/README.md)
+- Cập nhật hướng dẫn cài đặt (bao gồm `playwright install`)
+- Thêm docs cho tất cả CLI options mới
+- Thêm examples cho từng use case
+
+---
+
+## User Review Required
+
+> [!IMPORTANT]
+> **Playwright Installation**: Playwright yêu cầu chạy `playwright install` sau pip install để tải browser binaries (~300MB). Bạn có chấp nhận dependency này không? Nếu không, tôi sẽ dùng `selenium` hoặc chỉ cải thiện requests-based scraping.
+
+> [!IMPORTANT]
+> **Package name**: Hiện tại code import `web_miner.xxx` nhưng folder tên `Web-Claw`. Tôi sẽ đổi tất cả import thành relative/local import để chạy được trực tiếp trong folder. Có OK không?
+
+## Open Questions
+
+1. Bạn có muốn thêm tính năng **download file** (tải hình ảnh, PDF, etc.) hay chỉ liệt kê URL?
+2. Bạn có muốn thêm **scheduled scraping** (lên lịch cào tự động)?
+
+## Verification Plan
+
+### Automated Tests
+```bash
+# Chạy test hiện có
+python -m pytest tests/ -v
+
+# Test thực tế với các website
+python main.py --url https://quotes.toscrape.com
+python main.py --url https://books.toscrape.com --format all
+python main.py --url https://httpbin.org/html --js
+python main.py --batch
+```
+
+### Manual Verification
+- Test trên cả Linux và Windows (cross-platform paths)
+- Test với website có JS rendering
+- Test với website có self-signed SSL cert (`--no-verify`)
+- Test proxy/cookie support
+- Kiểm tra output format MD, JSON, CSV, XLSX

@@ -1,1 +1,1 @@
-# DataMine V5 — Web Data Mining Framework
+# Web-Claw V6 — Advanced Web Data Scraper

@@ -1,34 +1,33 @@
 """
-Batch Processor V5 — Process multiple websites
-from targets.txt using the WebMiner pipeline.
+Batch Processor V6 — Process multiple websites from targets.txt.
 """
+
+from typing import Optional, Set
 
 from rich.console import Console
 
-from web_miner.core.config import TARGET_FILE
-from web_miner.miner import WebMiner
+from core.config import TARGET_FILE
+from core.scraper import ScrapeOptions
+from miner import WebMiner
 
 console = Console()
 
 
-def process_single_site(url: str) -> dict:
+def process_single_site(url: str, options: Optional[ScrapeOptions] = None, formats: Optional[Set[str]] = None) -> dict:
     """Process a single website and return results."""
-
     console.print(f"\n[cyan]🔍 Scanning:[/cyan] {url}")
 
-    miner = WebMiner(url)
+    miner = WebMiner(url, options=options, formats=formats)
     data = miner.run()
 
     if not data:
         console.print(f"[red]❌ Failed:[/red] {url}")
         return {}
 
-    meta = data.get("metadata", {})
     text = data.get("text", {})
     links = data.get("links", {})
     contacts = data.get("contacts", {})
     tables = data.get("tables", {})
-
     h_count = sum(len(v) for v in text.get("headings", {}).values())
 
     console.print(f"[green]✅ Completed:[/green] {miner.site_name}")
@@ -38,17 +37,12 @@ def process_single_site(url: str) -> dict:
     return data
 
 
-def process_multiple_sites(file_path=None) -> None:
+def process_multiple_sites(file_path=None, options: Optional[ScrapeOptions] = None, formats: Optional[Set[str]] = None) -> None:
     """Process all websites listed in targets.txt."""
-
     target = file_path or TARGET_FILE
 
     with open(target, "r", encoding="utf-8") as f:
-        urls = [
-            line.strip()
-            for line in f
-            if line.strip() and not line.strip().startswith("#")
-        ]
+        urls = [line.strip() for line in f if line.strip() and not line.strip().startswith("#")]
 
     if not urls:
         console.print("[bold red]❌ No URLs found in targets.txt[/bold red]")
@@ -62,12 +56,9 @@ def process_multiple_sites(file_path=None) -> None:
     for i, url in enumerate(urls, 1):
         console.print(f"\n{'='*60}")
         console.print(f"[bold]Website {i}/{len(urls)}[/bold]")
-
-        # Ensure URL has scheme
         if not url.startswith("http"):
             url = "https://" + url
-
-        result = process_single_site(url)
+        result = process_single_site(url, options, formats)
         if result:
             success += 1
         else:
