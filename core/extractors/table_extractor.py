@@ -23,6 +23,7 @@ def extract_tables(soup: BeautifulSoup, html: str) -> Dict[str, Any]:
     try:
         raw_tables = pd.read_html(
             io.StringIO(html),
+            flavor='bs4',
             header=0,
             thousands=',',
             decimal='.',
