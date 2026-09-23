@@ -23,6 +23,7 @@ def extract_tables(soup: BeautifulSoup, html: str) -> Dict[str, Any]:
     try:
         raw_tables = pd.read_html(
             io.StringIO(html),
+            flavor='bs4',
             header=0,
             thousands=',',
             decimal='.',
@@ -30,7 +31,7 @@ def extract_tables(soup: BeautifulSoup, html: str) -> Dict[str, Any]:
         )
     except ValueError:
         logger.info("No HTML tables found on page")
-        return {"count": 0, "tables": []}
+        return {"count": 0, "total_found": 0, "tables": []}
 
     ranked = []
 
