@@ -1,13 +1,18 @@
-import pytest
 from bs4 import BeautifulSoup
 from web_miner.core.cleaner import extract_main_content, extract_clean_text
 
+
 def test_extract_clean_text():
-    html = "<html><body><script>alert('xss');</script><p>Hello</p><style>.hidden { display: none; }</style><span>World</span></body></html>"
+    html = (
+        "<html><body><script>alert('xss');</script><p>Hello</p>"
+        "<style>.hidden { display: none; }</style><span>World</span>"
+        "</body></html>"
+    )
     text = extract_clean_text(html)
     assert "Hello World" in text
     assert "alert" not in text
     assert ".hidden" not in text
+
 
 def test_extract_main_content():
     html = """

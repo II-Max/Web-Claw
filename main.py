@@ -9,6 +9,9 @@ import sys
 import argparse
 from typing import Optional, List
 from pathlib import Path
+from rich.console import Console
+from rich.panel import Panel
+from rich.table import Table
 
 # Thêm thư mục cha vào sys.path để hỗ trợ import tuyệt đối 'web_miner'
 current_file = Path(__file__).resolve()
@@ -16,12 +19,8 @@ project_root = current_file.parent.parent
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
-from rich.console import Console
-from rich.panel import Panel
-from rich.table import Table
-
-from web_miner.core.batch_processor import process_multiple_sites
-from web_miner.miner import WebMiner
+from web_miner.core.batch_processor import process_multiple_sites  # noqa: E402
+from web_miner.miner import WebMiner  # noqa: E402
 
 console = Console()
 
@@ -163,7 +162,7 @@ def _print_summary(data: dict, paths: dict) -> None:
     console.print(table)
 
     # Output paths
-    console.print(f"\n[bold green]📂 Output:[/bold green]")
+    console.print("\n[bold green]📂 Output:[/bold green]")
     console.print(f"  📝 Markdown: [cyan]{paths.get('markdown', 'N/A')}[/cyan]")
     console.print(f"  📊 JSON:     [cyan]{paths.get('json', 'N/A')}[/cyan]")
     console.print()

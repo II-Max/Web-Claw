@@ -4,7 +4,7 @@ HTML tables. Refactored from V3 table_miner.py.
 """
 
 import io
-from typing import Any, Dict, List
+from typing import Any, Dict
 
 import pandas as pd
 from bs4 import BeautifulSoup
@@ -27,6 +27,7 @@ def extract_tables(soup: BeautifulSoup, html: str) -> Dict[str, Any]:
             thousands=',',
             decimal='.',
             na_values=['-', 'N/A', ''],
+            flavor='bs4',
         )
     except ValueError:
         logger.info("No HTML tables found on page")

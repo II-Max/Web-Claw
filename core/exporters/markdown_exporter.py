@@ -119,7 +119,7 @@ def _write_metadata(data: Dict[str, Any], out_dir: Path) -> None:
     md = []
 
     md.append("# 🏷️ Metadata\n")
-    md.append(f"| Thuộc tính | Giá trị |")
+    md.append("| Thuộc tính | Giá trị |")
     md.append("|---|---|")
     md.append(f"| Title | {meta.get('title', '')} |")
     md.append(f"| Description | {meta.get('description', '')} |")
@@ -281,7 +281,10 @@ def _write_media(data: Dict[str, Any], out_dir: Path) -> None:
         md.append(f"## Videos ({len(videos)})\n")
         for i, video in enumerate(videos, 1):
             if video.get("type") == "embedded":
-                md.append(f"- 🎬 **{video.get('platform', '').title()}** — ID: `{video.get('video_id', '')}` — [Embed]({video.get('embed_url', '')})")
+                plat = video.get('platform', '').title()
+                vid = video.get('video_id', '')
+                embed = video.get('embed_url', '')
+                md.append(f"- 🎬 **{plat}** — ID: `{vid}` — [Embed]({embed})")
             else:
                 sources = video.get("sources", [])
                 for src in sources:
