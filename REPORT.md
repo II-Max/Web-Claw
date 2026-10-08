@@ -78,3 +78,38 @@ To safely revert all modifications:
 *   **Maintainability score**: 75/100
 *   **Technical debt level**: Moderate (Remaining technical debt includes full test coverage and linter warnings cleanup).
 *   **Production readiness**: Ready for safe CLI deployment.
+
+## Phase 10 — Supplemental Maintenance Update
+
+### Findings
+*   **P0 — Critical Security**: In `core/extractors/table_extractor.py`, `pandas.read_html` defaults to using the `lxml` parser, which can be vulnerable to XML External Entity (XXE) attacks when parsing untrusted HTML.
+*   **P4 — Maintainability**: Missing `.gitignore` file to ignore build artifacts, logs, and python cache, which leads to clutter in commits.
+
+### Patch Report
+*   **`core/extractors/table_extractor.py`**:
+    *   **Reason**: Mitigate potential XXE vulnerabilities by forcing the use of `bs4` instead of `lxml`.
+    *   **Modification**: Added `flavor='bs4'` argument to `pd.read_html`.
+    *   **Impact & Risks**: Strong security benefit. Requires `html5lib` dependency which is already present. No negative compatibility impact.
+*   **`.gitignore`**:
+    *   **Reason**: Repository hygiene.
+    *   **Modification**: Created `.gitignore` ignoring `__pycache__`, `*.py[cod]`, `.pytest_cache`, and `logs/datamine.log`.
+    *   **Impact & Risks**: Ensures cleaner subsequent commits.
+
+### Security Report
+*   **Detected vulnerabilities**: XML External Entity (XXE) vulnerability via default `lxml` parser in `pandas.read_html`.
+*   **Applied fixes**: Hardcoded the parser flavor to `bs4`.
+*   **Residual risks**: Same as before regarding SSRF by intent.
+
+### Testing Report
+*   **New tests**: Added `tests/test_table_extractor.py` to cover `extract_tables`.
+*   **Coverage impact**: Increased test coverage over the core HTML table extraction functionality and ensures extraction still behaves identically using the bs4 flavor.
+
+### Changelog
+*   `core/extractors/table_extractor.py`: Modified `pd.read_html` call to use `flavor='bs4'`.
+*   `.gitignore`: Created ignoring Python caches and logs.
+*   `tests/test_table_extractor.py`: Created test for `extract_tables`.
+
+### Rollback Plan (Update)
+*   **Revert `core/extractors/table_extractor.py`**: Remove `flavor='bs4'` argument from `pd.read_html`.
+*   **Revert `.gitignore`**: Delete the `.gitignore` file.
+*   **Revert `tests/test_table_extractor.py`**: Delete the file.
