@@ -33,7 +33,7 @@ def extract_main_content(soup: BeautifulSoup) -> str:
         or soup.find("article")
         or soup.find(attrs={"role": "main"})
         or soup.find("div", id=lambda x: x and "content" in x.lower() if x else False)
-        or soup.find("div", class_=lambda x: x and "content" in " ".join(x).lower() if x else False)
+        or soup.find("div", class_=lambda x: "content" in (" ".join(x) if isinstance(x, list) else x).lower() if x else False)
     )
 
     target = main if main else soup.body if soup.body else soup
