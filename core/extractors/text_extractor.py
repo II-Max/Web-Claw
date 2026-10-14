@@ -122,6 +122,12 @@ def _get_code_blocks(soup: BeautifulSoup) -> List[Dict[str, str]]:
         lang = ""
         target = code_tag if code_tag else pre
         classes = target.get("class", [])
+
+        if isinstance(classes, str):
+            classes = [classes]
+        elif not isinstance(classes, list):
+            classes = []
+
         for cls in classes:
             if cls.startswith("language-") or cls.startswith("lang-"):
                 lang = cls.split("-", 1)[1]
