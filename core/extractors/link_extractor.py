@@ -44,11 +44,12 @@ def extract_links(soup: BeautifulSoup, base_url: str) -> Dict[str, Any]:
         full_url = urljoin(base_url, href)
         parsed = urlparse(full_url)
 
+        rel_attr = a_tag.get("rel", [])
         link_data = {
             "url": full_url,
             "text": a_tag.get_text(strip=True),
             "title": a_tag.get("title", ""),
-            "rel": " ".join(a_tag.get("rel", [])),
+            "rel": " ".join(rel_attr) if isinstance(rel_attr, list) else str(rel_attr),
             "target": a_tag.get("target", ""),
         }
 
