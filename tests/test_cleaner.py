@@ -31,3 +31,20 @@ def test_extract_main_content():
     assert "Menu" not in content
     assert "Ads" not in content
     assert "Copyright" not in content
+
+def test_extract_main_content_string_class():
+    html = """
+    <html>
+        <body>
+            <div class="content-main">
+                <p>This is the string class content.</p>
+            </div>
+        </body>
+    </html>
+    """
+    soup = BeautifulSoup(html, "html.parser")
+    # Force class to be string
+    soup.div["class"] = "content-main"
+
+    content = extract_main_content(soup)
+    assert "This is the string class content." in content
