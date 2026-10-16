@@ -73,8 +73,8 @@ def _get_breadcrumbs(soup: BeautifulSoup, base_url: str) -> List[Dict[str, str]]
     # Try common breadcrumb patterns
     bc_containers = (
         soup.find_all("nav", attrs={"aria-label": lambda x: x and "breadcrumb" in x.lower() if x else False})
-        + soup.find_all(class_=lambda x: x and "breadcrumb" in " ".join(x).lower() if x else False)
-        + soup.find_all("ol", class_=lambda x: x and "breadcrumb" in " ".join(x).lower() if x else False)
+        + soup.find_all(class_=lambda x: x and "breadcrumb" in (" ".join(x) if isinstance(x, list) else str(x)).lower() if x else False)
+        + soup.find_all("ol", class_=lambda x: x and "breadcrumb" in (" ".join(x) if isinstance(x, list) else str(x)).lower() if x else False)
     )
 
     for container in bc_containers:
