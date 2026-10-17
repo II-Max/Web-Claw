@@ -40,10 +40,15 @@ def _get_nav_menus(soup: BeautifulSoup, base_url: str) -> List[Dict[str, Any]]:
 
     for nav in soup.find_all("nav"):
         menu_items = []
+        class_attr = nav.get("class")
+        class_str = ""
+        if class_attr:
+            class_str = class_attr[0] if isinstance(class_attr, list) else str(class_attr)
+
         nav_label = (
             nav.get("aria-label", "")
             or nav.get("id", "")
-            or nav.get("class", [""])[0] if nav.get("class") else ""
+            or class_str
         )
 
         for a_tag in nav.find_all("a", href=True):
@@ -72,9 +77,9 @@ def _get_breadcrumbs(soup: BeautifulSoup, base_url: str) -> List[Dict[str, str]]
 
     # Try common breadcrumb patterns
     bc_containers = (
-        soup.find_all("nav", attrs={"aria-label": lambda x: x and "breadcrumb" in x.lower() if x else False})
-        + soup.find_all(class_=lambda x: x and "breadcrumb" in " ".join(x).lower() if x else False)
-        + soup.find_all("ol", class_=lambda x: x and "breadcrumb" in " ".join(x).lower() if x else False)
+        soup.find_all("nav", attrs={"aria-label": lambda x: x and "breadcrumb" in (" ".join(x) if isinstance(x, list) else str(x)).lower() if x else False})
+        + soup.find_all(class_=lambda x: x and "breadcrumb" in (" ".join(x) if isinstance(x, list) else str(x)).lower() if x else False)
+        + soup.find_all("ol", class_=lambda x: x and "breadcrumb" in (" ".join(x) if isinstance(x, list) else str(x)).lower() if x else False)
     )
 
     for container in bc_containers:

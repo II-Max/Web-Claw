@@ -31,3 +31,18 @@ def test_extract_main_content():
     assert "Menu" not in content
     assert "Ads" not in content
     assert "Copyright" not in content
+
+def test_extract_main_content_string_attrs():
+    html = """
+    <html>
+      <body>
+        <div id="content" class="main-content">
+          <p>Real content with string attrs.</p>
+        </div>
+        <div id="sidebar">Should be ignored</div>
+      </body>
+    </html>
+    """
+    soup = BeautifulSoup(html, "html.parser")
+    content = extract_main_content(soup)
+    assert "Real content with string attrs." in content
