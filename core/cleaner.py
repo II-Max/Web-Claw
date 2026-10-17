@@ -32,8 +32,8 @@ def extract_main_content(soup: BeautifulSoup) -> str:
         soup.find("main")
         or soup.find("article")
         or soup.find(attrs={"role": "main"})
-        or soup.find("div", id=lambda x: x and "content" in x.lower() if x else False)
-        or soup.find("div", class_=lambda x: x and "content" in " ".join(x).lower() if x else False)
+        or soup.find("div", id=lambda x: x and "content" in (" ".join(x) if isinstance(x, list) else str(x)).lower() if x else False)
+        or soup.find("div", class_=lambda x: x and "content" in (" ".join(x) if isinstance(x, list) else str(x)).lower() if x else False)
     )
 
     target = main if main else soup.body if soup.body else soup
@@ -65,7 +65,7 @@ def extract_main_content(soup: BeautifulSoup) -> str:
             eid = element.attrs.get("id", "") if element.attrs else ""
             attrs_text = " ".join([
                 " ".join(cls) if isinstance(cls, list) else str(cls),
-                str(eid),
+                " ".join(eid) if isinstance(eid, list) else str(eid),
             ]).lower()
 
             if any(p in attrs_text for p in ad_patterns):

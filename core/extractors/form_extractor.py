@@ -23,12 +23,14 @@ def extract_forms(soup: BeautifulSoup, base_url: str) -> Dict[str, Any]:
         if action:
             action = urljoin(base_url, action)
 
+        class_attr = form.get("class", [])
+
         form_data = {
             "action": action,
             "method": form.get("method", "GET").upper(),
             "id": form.get("id", ""),
             "name": form.get("name", ""),
-            "class": " ".join(form.get("class", [])),
+            "class": " ".join(class_attr) if isinstance(class_attr, list) else str(class_attr) if class_attr else "",
             "enctype": form.get("enctype", ""),
             "fields": _get_fields(form),
         }
